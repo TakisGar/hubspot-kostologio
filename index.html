@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Kostologio Ergou - HubSpot</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f5f8fa;color:#2d3748}
+.header{background:linear-gradient(135deg,#ff7a59,#ff5c35);color:white;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.header h1{font-size:20px;font-weight:700}
+.deal-info{font-size:13px;opacity:.9;margin-top:4px}
+.tabs{display:flex;background:#fff;border-bottom:2px solid #e2e8f0;padding:0 24px;overflow-x:auto}
+.tab{padding:12px 18px;cursor:pointer;font-size:13px;font-weight:600;color:#718096;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .2s}
+.tab.active{color:#ff7a59;border-bottom-color:#ff7a59}
+.tab:hover{color:#ff7a59;background:#fff5f3}
+.tab-content{display:none;padding:20px 24px}
+.tab-content.active{display:block}
+.section-title{font-size:15px;font-weight:700;color:#2d3748;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #ff7a59}
+.table-wrapper{overflow-x:auto;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:20px}
+table{width:100%;border-collapse:collapse;background:white;font-size:11px;min-width:900px}
+th{background:#2d3748;color:white;padding:9px 7px;text-align:left;white-space:nowrap;font-size:11px;font-weight:600}
+td{padding:6px 7px;border-bottom:1px solid #e2e8f0;vertical-align:middle}
+tr:hover td{background:#fff5f3}
+tr:nth-child(even) td{background:#f9fafb}
+tr:nth-child(even):hover td{background:#fff5f3}
+input[type=text],input[type=number],select{width:100%;padding:4px 6px;border:1px solid #cbd5e0;border-radius:4px;font-size:11px;background:white}
+input[type=number]{text-align:right}
+input:focus,select:focus{outline:none;border-color:#ff7a59;box-shadow:0 0 0 2px rgba(255,122,89,.2)}
+.btn{padding:9px 18px;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s}
+.btn-primary{background:#ff7a59;color:white}
+.btn-primary:hover{background:#ff5c35}
+.btn-secondary{background:#e2e8f0;color:#4a5568}
+.btn-secondary:hover{background:#cbd5e0}
+.btn-success{background:#48bb78;color:white}
+.btn-success:hover{background:#38a169}
+.btn-sm{padding:5px 12px;font-size:12px}
+.btn-danger{background:#fc8181;color:white}
+.btn-danger:hover{background:#f56565}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:20px}
+.kpi-card{background:white;border-radius:8px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.08);border-left:4px solid #ff7a59}
+.kpi-label{font-size:10px;color:#718096;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.kpi-value{font-size:20px;font-weight:700;color:#2d3748;margin-top:4px}
+.kpi-value.green{color:#48bb78}
+.kpi-value.red{color:#fc8181}
+.action-bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.notification{background:#c6f6d5;border:1px solid #9ae6b4;color:#22543d;padding:12px 16px;border-radius:6px;margin-bottom:16px;font-size:13px;display:none}
+.notification.error{background:#fed7d7;border-color:#fc8181;color:#742a2a}
+.category-row td{background:#edf2f7;font-weight:700;color:#4a5568}
+.total-row td{background:#e2e8f0;font-weight:700;border-top:2px solid #a0aec0}
+.del-btn{background:#fc8181;color:white;border:none;border-radius:4px;padding:3px 7px;cursor:pointer;font-size:11px}
+.del-btn:hover{background:#f56565}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.6);border-top-color:white;border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle;margin-left:6px}
+</style>
+</head>
+
+<body>
+<div class="header">
+  <div>
+    <h1>&#x1F4CA; Kostologio Ergou</h1>
+    <div class="deal-info" id="dealInfo">Fortosi dedomenon...</div>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center">
+    <button class="btn btn-secondary btn-sm" onclick="loadFromHubSpot()">&#x1F504; Ananewsi</button>
+    <button class="btn btn-success btn-sm" onclick="saveToHubSpot()">&#x1F4BE; Apothikeusi</button>
+  </div>
+</div>
+<div id="notification" class="notification"></div>
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('kostologio')">&#x1F4CB; Kosti Ergou</div>
+  <div class="tab" onclick="switchTab('esoda')">&#x1F4B0; Esoda</div>
+  <div class="tab" onclick="switchTab('calculations')">&#x1F4CA; Calculations</div>
+  <div class="tab" onclick="switchTab('final')">&#x1F3C6; Final Result</div>
+</div>
+
+<!-- TAB 1: KOSTOLOGIO -->
+<div id="tab-kostologio" class="tab-content active">
+  <div class="action-bar">
+    <button class="btn btn-primary btn-sm" onclick="addKostoRow()">+ Prosthetiko Grammi</button>
+    <button class="btn btn-secondary btn-sm" onclick="calcKosto()">&#x1F501; Ypologismos</button>
+    <button class="btn btn-secondary btn-sm" onclick="exportTab1()">&#x1F4E5; Export CSV</button>
+  </div>
+  <div class="section-title">Kosti Ergou - Kataxorisi Kostologiou</div>
+  <div class="table-wrapper">
+    <table id="kostoTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Tmima</th>
+          <th>Kategoria</th>
+          <th>Perigrafi</th>
+          <th>Timi/Kosto Monadas (EUR)</th>
+          <th>Posotita</th>
+          <th>Minas</th>
+          <th>Synolo (EUR)</th>
+          <th>Pos. Ekptosis/Promithia (%)</th>
+          <th>Synoliko Kosto me Ekptosi</th>
+          <th>Timi Monadas</th>
+          <th>Teliki Timi Monadas</th>
+          <th>Parastatiko</th>
+          <th>Promithistis</th>
+          <th>Del</th>
+        </tr>
+      </thead>
+      <tbody id="kostoBody"></tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td colspan="7"><strong>SYNOLA</strong></td>
+          <td id="totalSynolo">0.00</td>
+          <td></td>
+          <td id="totalKostoMeEkptosi">0.00</td>
+          <td></td>
+          <td id="totalTelitiTimi">0.00</td>
+          <td colspan="3"></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="section-title">Pivot - Ana Kategoria</div>
+  <div class="table-wrapper">
+    <table id="pivotKategoria">
+      <thead><tr><th>Kategoria</th><th>Synoliko Kosto</th><th>Meta Ekptosi</th></tr></thead>
+      <tbody id="pivotKatBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TAB 2: ESODA -->
+<div id="tab-esoda" class="tab-content">
+  <div class="section-title">Esoda - Timologia kai Antagonismos</div>
+  <div class="action-bar">
+    <button class="btn btn-secondary btn-sm" onclick="syncEsodaFromKosto()">&#x1F504; Synxronismos apo Kosti</button>
+    <button class="btn btn-secondary btn-sm" onclick="calcEsoda()">&#x1F501; Ypologismos</button>
+  </div>
+  <div class="table-wrapper">
+    <table id="esodaTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Perigrafi</th>
+          <th>Kategoria</th>
+          <th>Kosto Monadas</th>
+          <th>Posotita</th>
+          <th>Ekptosi (%)</th>
+          <th>Timi Mon. me Ekptosi</th>
+          <th>Meriko Synolo</th>
+          <th>Teliko Synolo</th>
+          <th>Antagonismos 1</th>
+          <th>Antagonismos 2</th>
+          <th>Antagonismos 3</th>
+          <th>Mark Up (%)</th>
+          <th>Discounted MarkUp</th>
+          <th>Promithistis</th>
+          <th>FPA (%)</th>
+          <th>Teliki Timi me FPA</th>
+          <th>Parastatiko</th>
+        </tr>
+      </thead>
+      <tbody id="esodaBody"></tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td colspan="7"><strong>SYNOLA</strong></td>
+          <td id="esTotalMeriko">0.00</td>
+          <td id="esTotalTeliko">0.00</td>
+          <td colspan="3"></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td id="esTotalFPA">0.00</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="kpi-grid" id="esodaKPIs">
+    <div class="kpi-card"><div class="kpi-label">Margin %</div><div class="kpi-value" id="kpiMargin">0%</div></div>
+    <div class="kpi-card"><div class="kpi-label">Markup %</div><div class="kpi-value" id="kpiMarkup">0%</div></div>
+    <div class="kpi-card"><div class="kpi-label">Mikto Kerdos</div><div class="kpi-value green" id="kpiMiktoKerdos">0.00</div></div>
+    <div class="kpi-card"><div class="kpi-label">Ekptosi</div><div class="kpi-value" id="kpiEkptosi">0.00</div></div>
+    <div class="kpi-card"><div class="kpi-label">FPA</div><div class="kpi-value" id="kpiFPA">0.00</div></div>
+    <div class="kpi-card"><div class="kpi-label">Promithia Synergati %</div><div class="kpi-value" id="kpiPromithia">0%</div></div>
+  </div>
+  <div class="section-title" style="margin-top:16px">Sympirasma Esodwn</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:600px">
+    <div><label style="font-size:12px;font-weight:600">Promithia Synergati (%)</label>
+    <input type="number" id="promithiaSynergati" value="0" min="0" max="100" step="0.1" onchange="calcEsoda()" style="margin-top:4px"></div>
+    <div><label style="font-size:12px;font-weight:600">Syllogiko FPA (%)</label>
+    <input type="number" id="globalFPA" value="24" min="0" max="100" step="1" onchange="calcEsoda()" style="margin-top:4px"></div>
+  </div>
+</div>
+
+<!-- TAB 3: CALCULATIONS -->
+<div id="tab-calculations" class="tab-content">
+  <div class="section-title">Calculations - Synoptika Stoixeia</div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">Synoliko Kosto</div><div class="kpi-value" id="calcSynKosto">0.00 EUR</div></div>
+    <div class="kpi-card"><div class="kpi-label">Esoda</div><div class="kpi-value green" id="calcEsoda">0.00 EUR</div></div>
+    <div class="kpi-card"><div class="kpi-label">Mikto Kerdos</div><div class="kpi-value" id="calcMiktoKerdos">0.00 EUR</div></div>
+  </div>
+  <div class="section-title">Ana Kategoria</div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Kategoria</th>
+          <th>Synoliko Kosto (EUR)</th>
+          <th>Esoda (EUR)</th>
+          <th>Kerdos (EUR)</th>
+          <th>Margin %</th>
+        </tr>
+      </thead>
+      <tbody id="calcCategoryBody"></tbody>
+    </table>
+  </div>
+  <div class="section-title">Stoixeia Symfonias</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;max-width:900px">
+    <div>
+      <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Politis</label>
+      <select id="calcPolitis">
+        <option value="">-- Epilogi --</option>
+        <option value="Garantziotis">Garantziotis</option>
+        <option value="Stavridis">Stavridis</option>
+        <option value="Dioganis">Dioganis</option>
+      </select>
+    </div>
+    <div>
+      <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Status</label>
+      <select id="calcStatus">
+        <option value="">-- Epilogi --</option>
+        <option value="EFKAIRIA">EFKAIRIA</option>
+        <option value="PROSFORA">PROSFORA</option>
+        <option value="XATHIKE">XATHIKE</option>
+        <option value="TIMOLOGISI">TIMOLOGISI</option>
+      </select>
+    </div>
+    <div>
+      <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Lead Type</label>
+      <select id="calcLead">
+        <option value="">-- Epilogi --</option>
+        <option value="INBOUND">INBOUND</option>
+        <option value="DIRECT">DIRECT</option>
+        <option value="RENEWAL">RENEWAL</option>
+        <option value="INDIRECT">INDIRECT</option>
+      </select>
+    </div>
+    <div>
+      <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Minas</label>
+      <input type="text" id="calcMinas" placeholder="p.x. Ianouarios 2026">
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4: FINAL RESULT -->
+<div id="tab-final" class="tab-content">
+  <div class="section-title">Final Result - Syllogiko Apotelasma Symfonias</div>
+  <div class="table-wrapper">
+    <table class="final-table">
+      <thead>
+        <tr>
+          <th>Politis</th><th>Pelatis</th><th>Ergo</th><th>Minas</th><th>Status</th>
+          <th>Syn. Kosto</th><th>Esoda</th><th>Mikto Kerdos</th>
+          <th>Promithia Syn.</th><th>Mark Up %</th><th>Margin %</th>
+          <th>EXOPLISMOS</th><th>YPIRESIES</th><th>ALLA EXODA</th>
+          <th>MIKROYLIKA</th><th>ACCESSORIES</th><th>LOGISMIKO</th><th>METAFORIKA</th>
+          <th>Lead</th><th>Ektimisi Enarxis</th><th>Im. Kleisimatos</th>
+        </tr>
+      </thead>
+      <tbody id="finalBody"></tbody>
+    </table>
+  </div>
+  <div class="action-bar" style="margin-top:16px">
+    <button class="btn btn-primary" onclick="generateFinalResult()">&#x1F501; Enimerotiki Final Result</button>
+    <button class="btn btn-success" onclick="saveToHubSpot()">&#x1F4BE; Apotheikefsi sto HubSpot</button>
+    <button class="btn btn-secondary" onclick="exportFinalCSV()">&#x1F4E5; Export CSV</button>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:500px;margin-top:16px">
+    <div>
+      <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Ektimisi Enarxis</label>
+      <input type="date" id="finalEnarxi" style="padding:6px;border:1px solid #cbd5e0;border-radius:4px;font-size:12px;width:100%">
+    </div>
+    <div>
+      <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Im. Kleisimatos</label>
+      <input type="date" id="finalKleisimo" style="padding:6px;border:1px solid #cbd5e0;border-radius:4px;font-size:12px;width:100%">
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== CONSTANTS =====
+const KATEGORIAI = ['EXOPLISMOS','YPIRESIES','ALLA EXODA','MIKROYLIKA','ACCESSORIES','LOGISMIKO','METAFORIKA'];
+const PARASTATIKA = ['Timologio','Apostoli','Deltio Paraggelias','Symbasi','Proforma'];
+const MONTHS = ['Ianouarios','Fevrouarios','Martios','Aprilios','Maios','Iounios','Ioulios','Avgoustos','Septemvrios','Oktovrios','Noemvrios','Dekemvrios'];
+
+// Global state
+let dealData = {};
+let kostoRows = [];
+let esodaRows = [];
+let hsPortalId = null;
+let hsDealId = null;
+
+// ===== INIT =====
+function init() {
+  // Parse HubSpot context from URL or parent frame
+  try {
+    const params = new URLSearchParams(window.location.search);
+    hsDealId = params.get('dealId') || params.get('associatedObjectId');
+    hsPortalId = params.get('portalId');
+    if (hsDealId) {
+      document.getElementById('dealInfo').textContent = 'Deal ID: ' + hsDealId;
+      loadFromHubSpot();
+    } else {
+      document.getElementById('dealInfo').textContent = 'Standalone mode - Eisagage Deal ID gia sindesi me HubSpot';
+      addDefaultRows();
+    }
+  } catch(e) {
+    document.getElementById('dealInfo').textContent = 'Demo mode';
+    addDefaultRows();
+  }
+}
+
+function addDefaultRows() {
+  KATEGORIAI.forEach(kat => {
+    addKostoRow(kat, 'Nea kataxorisi', 0, 1);
+  });
+  syncEsodaFromKosto();
+}
+
+// ===== TAB SWITCHING =====
+function switchTab(tabId) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-' + tabId).classList.add('active');
+  event.target.classList.add('active');
+  if (tabId === 'calculations') updateCalculations();
+  if (tabId === 'final') generateFinalResult();
+}
+
+// ===== NOTIFICATION =====
+function showNotif(msg, type) {
+  const n = document.getElementById('notification');
+  n.textContent = msg;
+  n.className = 'notification' + (type === 'error' ? ' error' : '');
+  n.style.display = 'block';
+  setTimeout(() => n.style.display = 'none', 4000);
+}
+
+// ===== SHEET 1: KOSTO ROWS =====
+function addKostoRow(kat, desc, price, qty) {
+  const body = document.getElementById('kostoBody');
+  const idx = body.rows.length + 1;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td>${idx}</td>
+    <td><input type="text" class="tmima" value="" placeholder="Tmima"></td>
+    <td><select class="kategoria" onchange="calcKosto()">
+      ${KATEGORIAI.map(k => '<option value="'+k+'"'+(k===(kat||KATEGORIAI[0])?' selected':'')+'>'+k+'</option>').join('')}
+    </select></td>
+    <td><input type="text" class="perigrafi" value="${desc||''}" placeholder="Perigrafi"></td>
+    <td><input type="number" class="timiMonadas" value="${price||0}" min="0" step="0.01" onchange="calcKosto()"></td>
+    <td><input type="number" class="posotita" value="${qty||1}" min="0" step="1" onchange="calcKosto()"></td>
+    <td><select class="minas">${MONTHS.map(m => '<option>'+m+'</option>').join('')}</select></td>
+    <td class="synolo">0.00</td>
+    <td><input type="number" class="ekptosi" value="0" min="0" max="100" step="0.1" onchange="calcKosto()"></td>
+    <td class="kostoMeEkptosi">0.00</td>
+    <td class="timiMon2">0.00</td>
+    <td class="telitiTiMon">0.00</td>
+    <td><select class="parastatiko">${PARASTATIKA.map(p => '<option>'+p+'</option>').join('')}</select></td>
+    <td><input type="text" class="promithistis" value="" placeholder="Promithistis"></td>
+    <td><button class="del-btn" onclick="delRow(this,'kostoBody')">x</button></td>
+  `;
+  body.appendChild(tr);
+  calcKosto();
+}
+
+
+function delRow(btn, tbodyId) {
+  btn.closest('tr').remove();
+  calcKosto();
+  renumberRows(tbodyId);
+}
+
+function renumberRows(tbodyId) {
+  const body = document.getElementById(tbodyId);
+  Array.from(body.rows).forEach((r, i) => { if (r.cells[0]) r.cells[0].textContent = i + 1; });
+}
+
+function calcKosto() {
+  const body = document.getElementById('kostoBody');
+  let totalSyn = 0, totalMeEkptosi = 0, totalTelitiTimi = 0;
+  const pivotData = {};
+  KATEGORIAI.forEach(k => pivotData[k] = { syn: 0, meEkptosi: 0 });
+
+  Array.from(body.rows).forEach(tr => {
+    const timi = parseFloat(tr.querySelector('.timiMonadas')?.value) || 0;
+    const pos = parseFloat(tr.querySelector('.posotita')?.value) || 0;
+    const ekp = parseFloat(tr.querySelector('.ekptosi')?.value) || 0;
+    const kat = tr.querySelector('.kategoria')?.value || '';
+    const syn = timi * pos;
+    const meEkp = syn * (1 - ekp / 100);
+    const timiMon2 = timi * (1 - ekp / 100);
+    tr.querySelector('.synolo').textContent = syn.toFixed(2);
+    tr.querySelector('.kostoMeEkptosi').textContent = meEkp.toFixed(2);
+    tr.querySelector('.timiMon2').textContent = timiMon2.toFixed(2);
+    tr.querySelector('.telitiTiMon').textContent = timiMon2.toFixed(2);
+    totalSyn += syn;
+    totalMeEkptosi += meEkp;
+    totalTelitiTimi += timiMon2 * pos;
+    if (pivotData[kat]) { pivotData[kat].syn += syn; pivotData[kat].meEkptosi += meEkp; }
+  });
+
+  document.getElementById('totalSynolo').textContent = totalSyn.toFixed(2);
+  document.getElementById('totalKostoMeEkptosi').textContent = totalMeEkptosi.toFixed(2);
+  document.getElementById('totalTelitiTimi').textContent = totalTelitiTimi.toFixed(2);
+
+  const pivotBody = document.getElementById('pivotKatBody');
+  pivotBody.innerHTML = '';
+  KATEGORIAI.forEach(k => {
+    if (pivotData[k].syn > 0) {
+      const tr2 = pivotBody.insertRow();
+      tr2.innerHTML = '<td>' + k + '</td><td>' + pivotData[k].syn.toFixed(2) + '</td><td>' + pivotData[k].meEkptosi.toFixed(2) + '</td>';
+    }
+  });
+}
+
+function syncEsodaFromKosto() {
+  const kostoBody = document.getElementById('kostoBody');
+  const esodaBody = document.getElementById('esodaBody');
+  esodaBody.innerHTML = '';
+  Array.from(kostoBody.rows).forEach((tr, i) => {
+    const perigrafi = tr.querySelector('.perigrafi')?.value || '';
+    const kat = tr.querySelector('.kategoria')?.value || '';
+    const kostoMon = parseFloat(tr.querySelector('.timiMonadas')?.value) || 0;
+    const pos = parseFloat(tr.querySelector('.posotita')?.value) || 1;
+    addEsodaRow(i + 1, perigrafi, kat, kostoMon, pos);
+  });
+  calcEsoda();
+}
+
+function addEsodaRow(idx, perigrafi, kat, kostoMon, pos) {
+  const body = document.getElementById('esodaBody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td>${idx}</td>
+    <td><input type="text" class="esPerig" value="${perigrafi}"></td>
+    <td><select class="esKat">${KATEGORIAI.map(k => '<option value="'+k+'"'+(k===kat?' selected':'')+'>'+k+'</option>').join('')}</select></td>
+    <td class="esKostoMon">${kostoMon.toFixed(2)}</td>
+    <td><input type="number" class="esPosotita" value="${pos}" min="0" step="1" onchange="calcEsoda()"></td>
+    <td><input type="number" class="esEkptosi" value="0" min="0" max="100" step="0.1" onchange="calcEsoda()"></td>
+    <td class="esTimiMonEkp">0.00</td>
+    <td class="esMeriko">0.00</td>
+    <td class="esTeliko">0.00</td>
+    <td><input type="number" class="esAntagI" value="0" step="0.01" min="0"></td>
+    <td><input type="number" class="esAntagII" value="0" step="0.01" min="0"></td>
+    <td><input type="number" class="esAntagIII" value="0" step="0.01" min="0"></td>
+    <td><input type="number" class="esMarkup" value="20" min="0" step="0.1" onchange="calcEsoda()"></td>
+    <td class="esDiscMarkup">0.00</td>
+    <td><input type="text" class="esProm" value="" placeholder="Promithistis"></td>
+    <td><input type="number" class="esFPA" value="24" min="0" max="100" step="1" onchange="calcEsoda()"></td>
+    <td class="esTelitiMeFPA">0.00</td>
+    <td><select class="esParastatiko">${PARASTATIKA.map(p => '<option>'+p+'</option>').join('')}</select></td>
+  `;
+  body.appendChild(tr);
+}
+
+
+function calcEsoda() {
+  const body = document.getElementById('esodaBody');
+  let totalMeriko = 0, totalTeliko = 0, totalKosto = 0, totalFPA = 0, totalEkptosi = 0;
+  const promithia = parseFloat(document.getElementById('promithiaSynergati')?.value) || 0;
+  const globalFPA = parseFloat(document.getElementById('globalFPA')?.value) || 24;
+
+  Array.from(body.rows).forEach(tr => {
+    const kostoMon = parseFloat(tr.querySelector('.esKostoMon')?.textContent) || 0;
+    const pos = parseFloat(tr.querySelector('.esPosotita')?.value) || 1;
+    const ekp = parseFloat(tr.querySelector('.esEkptosi')?.value) || 0;
+    const markup = parseFloat(tr.querySelector('.esMarkup')?.value) || 0;
+    const fpa = parseFloat(tr.querySelector('.esFPA')?.value) || globalFPA;
+
+    const markupPrice = kostoMon * (1 + markup / 100);
+    const timiMonEkp = markupPrice * (1 - ekp / 100);
+    const meriko = kostoMon * pos;
+    const teliko = markupPrice * pos;
+    const ekptAmt = (markupPrice - timiMonEkp) * pos;
+    const telikoMeFPA = teliko * (1 + fpa / 100);
+    const discMarkup = timiMonEkp;
+
+    tr.querySelector('.esTimiMonEkp').textContent = timiMonEkp.toFixed(2);
+    tr.querySelector('.esMeriko').textContent = meriko.toFixed(2);
+    tr.querySelector('.esTeliko').textContent = teliko.toFixed(2);
+    tr.querySelector('.esDiscMarkup').textContent = discMarkup.toFixed(2);
+    tr.querySelector('.esTelitiMeFPA').textContent = telikoMeFPA.toFixed(2);
+
+    totalMeriko += meriko;
+    totalTeliko += teliko;
+    totalKosto += meriko;
+    totalFPA += teliko * (fpa / 100);
+    totalEkptosi += ekptAmt;
+  });
+
+  document.getElementById('esTotalMeriko').textContent = totalMeriko.toFixed(2);
+  document.getElementById('esTotalTeliko').textContent = totalTeliko.toFixed(2);
+  document.getElementById('esTotalFPA').textContent = totalFPA.toFixed(2);
+
+  const miktoKerdos = totalTeliko - totalMeriko;
+  const margin = totalTeliko > 0 ? (miktoKerdos / totalTeliko * 100) : 0;
+  const markup_pct = totalMeriko > 0 ? (miktoKerdos / totalMeriko * 100) : 0;
+  const promAmt = totalTeliko * (promithia / 100);
+
+  document.getElementById('kpiMargin').textContent = margin.toFixed(1) + '%';
+  document.getElementById('kpiMargin').className = 'kpi-value ' + (margin >= 0 ? 'green' : 'red');
+  document.getElementById('kpiMarkup').textContent = markup_pct.toFixed(1) + '%';
+  document.getElementById('kpiMiktoKerdos').textContent = miktoKerdos.toFixed(2) + ' EUR';
+  document.getElementById('kpiMiktoKerdos').className = 'kpi-value ' + (miktoKerdos >= 0 ? 'green' : 'red');
+  document.getElementById('kpiEkptosi').textContent = totalEkptosi.toFixed(2) + ' EUR';
+  document.getElementById('kpiFPA').textContent = totalFPA.toFixed(2) + ' EUR';
+  document.getElementById('kpiPromithia').textContent = promithia.toFixed(1) + '% (' + promAmt.toFixed(2) + ' EUR)';
+}
+
+function updateCalculations() {
+  const kostoBody = document.getElementById('kostoBody');
+  let totalKosto = 0;
+  const katKosto = {};
+  KATEGORIAI.forEach(k => katKosto[k] = 0);
+
+  Array.from(kostoBody.rows).forEach(tr => {
+    const meEkp = parseFloat(tr.querySelector('.kostoMeEkptosi')?.textContent) || 0;
+    const kat = tr.querySelector('.kategoria')?.value || '';
+    totalKosto += meEkp;
+    if (katKosto[kat] !== undefined) katKosto[kat] += meEkp;
+  });
+
+  const esodaBody = document.getElementById('esodaBody');
+  let totalEsoda = 0;
+  const katEsoda = {};
+  KATEGORIAI.forEach(k => katEsoda[k] = 0);
+
+  Array.from(esodaBody.rows).forEach(tr => {
+    const teliko = parseFloat(tr.querySelector('.esTeliko')?.textContent) || 0;
+    const kat = tr.querySelector('.esKat')?.value || '';
+    totalEsoda += teliko;
+    if (katEsoda[kat] !== undefined) katEsoda[kat] += teliko;
+  });
+
+  const miktoKerdos = totalEsoda - totalKosto;
+  document.getElementById('calcSynKosto').textContent = totalKosto.toFixed(2) + ' EUR';
+  document.getElementById('calcEsoda').textContent = totalEsoda.toFixed(2) + ' EUR';
+  document.getElementById('calcMiktoKerdos').textContent = miktoKerdos.toFixed(2) + ' EUR';
+  document.getElementById('calcMiktoKerdos').className = 'kpi-value ' + (miktoKerdos >= 0 ? 'green' : 'red');
+
+  const calcBody = document.getElementById('calcCategoryBody');
+  calcBody.innerHTML = '';
+  KATEGORIAI.forEach(k => {
+    const kosto = katKosto[k] || 0;
+    const esoda = katEsoda[k] || 0;
+    const kerdos = esoda - kosto;
+    const margin = esoda > 0 ? (kerdos / esoda * 100) : 0;
+    if (kosto > 0 || esoda > 0) {
+      const tr = calcBody.insertRow();
+      tr.innerHTML = '<td>' + k + '</td><td>' + kosto.toFixed(2) + '</td><td>' + esoda.toFixed(2) + '</td><td style="color:' + (kerdos >= 0 ? '#48bb78' : '#fc8181') + '">' + kerdos.toFixed(2) + '</td><td>' + margin.toFixed(1) + '%</td>';
+    }
+  });
+}
+
+
+function generateFinalResult() {
+  updateCalculations();
+  const kostoBody = document.getElementById('kostoBody');
+  let totalKosto = 0;
+  const katKosto = {};
+  KATEGORIAI.forEach(k => katKosto[k] = 0);
+  Array.from(kostoBody.rows).forEach(tr => {
+    const meEkp = parseFloat(tr.querySelector('.kostoMeEkptosi')?.textContent) || 0;
+    const kat = tr.querySelector('.kategoria')?.value || '';
+    totalKosto += meEkp;
+    if (katKosto[kat] !== undefined) katKosto[kat] += meEkp;
+  });
+
+  const esodaBody = document.getElementById('esodaBody');
+  let totalEsoda = 0;
+  const katEsoda = {};
+  KATEGORIAI.forEach(k => katEsoda[k] = 0);
+  Array.from(esodaBody.rows).forEach(tr => {
+    const teliko = parseFloat(tr.querySelector('.esTeliko')?.textContent) || 0;
+    const kat = tr.querySelector('.esKat')?.value || '';
+    totalEsoda += teliko;
+    if (katEsoda[kat] !== undefined) katEsoda[kat] += teliko;
+  });
+
+  const miktoKerdos = totalEsoda - totalKosto;
+  const margin = totalEsoda > 0 ? (miktoKerdos / totalEsoda * 100) : 0;
+  const markup_pct = totalKosto > 0 ? (miktoKerdos / totalKosto * 100) : 0;
+  const promithia = parseFloat(document.getElementById('promithiaSynergati')?.value) || 0;
+  const promAmt = totalEsoda * (promithia / 100);
+  const politis = document.getElementById('calcPolitis')?.value || '';
+  const status = document.getElementById('calcStatus')?.value || '';
+  const lead = document.getElementById('calcLead')?.value || '';
+  const minas = document.getElementById('calcMinas')?.value || '';
+  const enarxi = document.getElementById('finalEnarxi')?.value || '';
+  const kleisimo = document.getElementById('finalKleisimo')?.value || '';
+  const pelatis = dealData.dealname || 'N/A';
+
+  const finalBody = document.getElementById('finalBody');
+  finalBody.innerHTML = '';
+  const tr = finalBody.insertRow();
+  tr.innerHTML = [
+    politis, pelatis, pelatis, minas, status,
+    totalKosto.toFixed(2), totalEsoda.toFixed(2), miktoKerdos.toFixed(2),
+    promAmt.toFixed(2), markup_pct.toFixed(1) + '%', margin.toFixed(1) + '%',
+    (katEsoda['EXOPLISMOS'] || 0).toFixed(2),
+    (katEsoda['YPIRESIES'] || 0).toFixed(2),
+    (katEsoda['ALLA EXODA'] || 0).toFixed(2),
+    (katEsoda['MIKROYLIKA'] || 0).toFixed(2),
+    (katEsoda['ACCESSORIES'] || 0).toFixed(2),
+    (katEsoda['LOGISMIKO'] || 0).toFixed(2),
+    (katEsoda['METAFORIKA'] || 0).toFixed(2),
+    lead, enarxi, kleisimo
+  ].map(v => '<td>' + v + '</td>').join('');
+}
+
+// ===== HUBSPOT INTEGRATION =====
+function loadFromHubSpot() {
+  if (!hsDealId || !hsPortalId) {
+    showNotif('Den vrethike Deal ID. Chrisimopoisie standalone mode.', 'error');
+    addDefaultRows();
+    return;
+  }
+  document.getElementById('dealInfo').textContent = 'Fortosi deal ' + hsDealId + '...';
+  fetch('/api/v1/deals/' + hsDealId + '?portalId=' + hsPortalId)
+    .then(r => r.json())
+    .then(data => {
+      dealData = data.properties || {};
+      document.getElementById('dealInfo').textContent = (dealData.dealname || 'Deal') + ' | ' + (dealData.dealstage || '') + ' | Owner: ' + (dealData.hubspot_owner_id || '');
+      loadLineItems();
+    })
+    .catch(() => {
+      document.getElementById('dealInfo').textContent = 'Demo mode - HubSpot API unavailable';
+      addDefaultRows();
+    });
+}
+
+function loadLineItems() {
+  if (!hsDealId) return;
+  fetch('/api/v1/deals/' + hsDealId + '/associations/line_items?portalId=' + hsPortalId)
+    .then(r => r.json())
+    .then(data => {
+      const lineItemIds = (data.results || []).map(r => r.id);
+      if (lineItemIds.length === 0) { addDefaultRows(); return; }
+      Promise.all(lineItemIds.map(id =>
+        fetch('/api/v1/line_items/' + id + '?portalId=' + hsPortalId).then(r => r.json())
+      )).then(items => {
+        const body = document.getElementById('kostoBody');
+        body.innerHTML = '';
+        items.forEach((item, i) => {
+          const p = item.properties || {};
+          addKostoRow(
+            p.hs_product_type || KATEGORIAI[i % KATEGORIAI.length],
+            p.name || p.hs_sku || 'Item ' + (i+1),
+            parseFloat(p.price) || 0,
+            parseFloat(p.quantity) || 1
+          );
+        });
+        syncEsodaFromKosto();
+        showNotif('Fortothikan ' + items.length + ' line items apo to HubSpot!');
+      });
+    })
+    .catch(() => addDefaultRows());
+}
+
+function saveToHubSpot() {
+  generateFinalResult();
+  const totalKostoEl = document.getElementById('calcSynKosto');
+  const totalEsodaEl = document.getElementById('calcEsoda');
+  if (!hsDealId) { showNotif('Apotheikefsi topika (enimerwthike i othoni). Gia synxronismo me HubSpot, anoixte apo Deal record.'); return; }
+  const payload = {
+    properties: {
+      amount: parseFloat(document.getElementById('esTotalTeliko')?.textContent) || 0,
+      description: 'Kostologio ypologistike - ' + new Date().toLocaleDateString('el-GR')
+    }
+  };
+  fetch('/api/v1/deals/' + hsDealId + '?portalId=' + hsPortalId, {
+    method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(() => showNotif('Apotheikefthike sto HubSpot!'))
+    .catch(() => showNotif('I apotheikefsi apetixe. Elenxte syndesi.', 'error'));
+}
+
+function exportTab1() {
+  const body = document.getElementById('kostoBody');
+  let csv = 'AA,Tmima,Kategoria,Perigrafi,Timi Monadas,Posotita,Synolo,Ekptosi,Kosto me Ekptosi,Promithistis\n';
+  Array.from(body.rows).forEach((tr, i) => {
+    csv += [i+1, tr.querySelector('.tmima')?.value||'', tr.querySelector('.kategoria')?.value||'',
+      tr.querySelector('.perigrafi')?.value||'', tr.querySelector('.timiMonadas')?.value||0,
+      tr.querySelector('.posotita')?.value||0, tr.querySelector('.synolo')?.textContent||0,
+      tr.querySelector('.ekptosi')?.value||0, tr.querySelector('.kostoMeEkptosi')?.textContent||0,
+      tr.querySelector('.promithistis')?.value||''].join(',') + '\n';
+  });
+  downloadCSV(csv, 'kosti_ergou.csv');
+}
+
+function exportFinalCSV() {
+  const body = document.getElementById('finalBody');
+  if (!body.rows.length) { generateFinalResult(); }
+  let csv = 'Politis,Pelatis,Ergo,Minas,Status,Syn.Kosto,Esoda,Mikto Kerdos,Promithia,MarkUp,Margin,EXOPLISMOS,YPIRESIES,ALLA EXODA,MIKROYLIKA,ACCESSORIES,LOGISMIKO,METAFORIKA,Lead,Enarxi,Kleisimo\n';
+  Array.from(body.rows).forEach(tr => {
+    csv += Array.from(tr.cells).map(c => c.textContent).join(',') + '\n';
+  });
+  downloadCSV(csv, 'final_result.csv');
+}
+
+function downloadCSV(csv, filename) {
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+
+window.addEventListener('load', init);
+</script>
+</body>
+</html>
