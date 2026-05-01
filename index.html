@@ -2,721 +2,452 @@
 <html lang="el">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Kostologio Ergou - HubSpot</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Οικονομική Προσφορά — HubSpot</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Arial,sans-serif}
-body{background:#f5f8fa;color:#2d3748}
-.header{background:linear-gradient(135deg,#ff7a59,#ff5c35);color:white;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.15)}
-.header h1{font-size:20px;font-weight:700}
-.deal-info{font-size:13px;opacity:.9;margin-top:4px}
-.tabs{display:flex;background:#fff;border-bottom:2px solid #e2e8f0;padding:0 24px;overflow-x:auto}
-.tab{padding:12px 18px;cursor:pointer;font-size:13px;font-weight:600;color:#718096;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .2s}
-.tab.active{color:#ff7a59;border-bottom-color:#ff7a59}
-.tab:hover{color:#ff7a59;background:#fff5f3}
-.tab-content{display:none;padding:20px 24px}
-.tab-content.active{display:block}
-.section-title{font-size:15px;font-weight:700;color:#2d3748;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #ff7a59}
-.table-wrapper{overflow-x:auto;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:20px}
-table{width:100%;border-collapse:collapse;background:white;font-size:11px;min-width:900px}
-th{background:#2d3748;color:white;padding:9px 7px;text-align:left;white-space:nowrap;font-size:11px;font-weight:600}
-td{padding:6px 7px;border-bottom:1px solid #e2e8f0;vertical-align:middle}
-tr:hover td{background:#fff5f3}
-tr:nth-child(even) td{background:#f9fafb}
-tr:nth-child(even):hover td{background:#fff5f3}
-input[type=text],input[type=number],select{width:100%;padding:4px 6px;border:1px solid #cbd5e0;border-radius:4px;font-size:11px;background:white}
-input[type=number]{text-align:right}
-input:focus,select:focus{outline:none;border-color:#ff7a59;box-shadow:0 0 0 2px rgba(255,122,89,.2)}
-.btn{padding:9px 18px;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s}
-.btn-primary{background:#ff7a59;color:white}
-.btn-primary:hover{background:#ff5c35}
-.btn-secondary{background:#e2e8f0;color:#4a5568}
-.btn-secondary:hover{background:#cbd5e0}
-.btn-success{background:#48bb78;color:white}
-.btn-success:hover{background:#38a169}
-.btn-sm{padding:5px 12px;font-size:12px}
-.btn-danger{background:#fc8181;color:white}
-.btn-danger:hover{background:#f56565}
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:20px}
-.kpi-card{background:white;border-radius:8px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.08);border-left:4px solid #ff7a59}
-.kpi-label{font-size:10px;color:#718096;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-.kpi-value{font-size:20px;font-weight:700;color:#2d3748;margin-top:4px}
-.kpi-value.green{color:#48bb78}
-.kpi-value.red{color:#fc8181}
-.action-bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
-.notification{background:#c6f6d5;border:1px solid #9ae6b4;color:#22543d;padding:12px 16px;border-radius:6px;margin-bottom:16px;font-size:13px;display:none}
-.notification.error{background:#fed7d7;border-color:#fc8181;color:#742a2a}
-.category-row td{background:#edf2f7;font-weight:700;color:#4a5568}
-.total-row td{background:#e2e8f0;font-weight:700;border-top:2px solid #a0aec0}
-.del-btn{background:#fc8181;color:white;border:none;border-radius:4px;padding:3px 7px;cursor:pointer;font-size:11px}
-.del-btn:hover{background:#f56565}
+*,::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0f1f3d;--blue:#1a56db;--blue-lt:#e8f0fe;--green:#059669;--red:#dc2626;--amber:#d97706;--gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-300:#cbd5e1;--gray-400:#94a3b8;--gray-600:#475569;--gray-700:#334155;--gray-900:#0f172a;--hs:#ff7a59;--white:#ffffff;--r:10px}
+body{font-family:'DM Sans',sans-serif;background:var(--gray-50);color:var(--gray-900);font-size:13px;min-height:100vh;padding:20px 16px 48px}
+.wrap{max-width:1480px;margin:0 auto}
+.hdr{background:var(--navy);border-radius:var(--r) var(--r) 0 0;padding:22px 28px;display:flex;align-items:center;gap:14px}
+.hdr-icon{width:40px;height:40px;background:var(--blue);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.hdr h1{font-size:18px;font-weight:700;color:#fff;flex:1}
+.hs-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block;margin-right:5px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hs-pill{font-size:11px;padding:4px 12px;border-radius:20px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.85);display:flex;align-items:center;gap:6px}
+.deal-panel{background:#fff;border:1px solid var(--gray-200);border-top:none;padding:20px 28px 16px;position:relative}
+.deal-panel .panel-label{font-size:9px;font-weight:700;letter-spacing:.8px;color:var(--gray-400);text-transform:uppercase;margin-bottom:12px}
+.deal-row{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap}
+.deal-search-wrap{flex:1;min-width:240px}
+.deal-search-wrap label,.fg label{display:block;font-size:10px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
+.ac-wrap{position:relative}
+.ac-wrap input,.fg input,.fg select{width:100%;border:1.5px solid var(--gray-200);border-radius:7px;padding:8px 11px;font-family:inherit;font-size:13px;color:var(--gray-900);background:var(--gray-50);outline:none;transition:border .2s}
+.ac-wrap input:focus,.fg input:focus,.fg select:focus{border-color:var(--blue);background:#fff}
+.ac-list{position:absolute;top:100%;left:0;right:0;background:#fff;border:1.5px solid var(--gray-200);border-radius:8px;z-index:200;margin-top:3px;overflow:hidden;max-height:240px;overflow-y:auto;box-shadow:0 8px 28px rgba(15,31,61,.13)}
+.ac-item{padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--gray-100)}
+.ac-item:last-child{border-bottom:none}
+.ac-item:hover{background:var(--gray-50)}
+.ac-name{font-size:13px;font-weight:600;color:var(--gray-900)}
+.ac-sub{font-size:11px;color:var(--gray-400);margin-top:2px;display:flex;gap:10px;flex-wrap:wrap}
+.ac-amt{color:var(--blue);font-weight:600}
+.deal-info{flex:1;min-width:200px;background:var(--blue-lt);border-radius:8px;padding:12px 16px;display:none}
+.di-name{font-size:13px;font-weight:700;color:var(--navy)}
+.di-meta{font-size:11px;color:var(--gray-600);margin-top:3px;display:flex;gap:10px;flex-wrap:wrap}
+.btn-load{padding:9px 20px;border-radius:7px;border:none;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;background:var(--hs);color:#fff;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;transition:background .2s}
+.btn-load:hover{background:#e8603d}
+.btn-load:disabled{background:var(--gray-300);cursor:not-allowed}
+.load-hint{font-size:11px;color:var(--gray-400);margin-top:5px;font-style:italic}
+.meta{background:#fff;border:1px solid var(--gray-200);border-top:none;padding:20px 28px;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:16px;align-items:end}
+.cac-list{position:absolute;top:100%;left:0;right:0;background:#fff;border:1.5px solid var(--gray-200);border-radius:8px;z-index:100;margin-top:3px;overflow:hidden;max-height:200px;overflow-y:auto;box-shadow:0 8px 24px rgba(15,31,61,.12)}
+.cac-item{padding:9px 13px;cursor:pointer;font-size:13px;color:var(--gray-900);border-bottom:1px solid var(--gray-100)}
+.cac-item:last-child{border-bottom:none}
+.cac-item:hover{background:var(--gray-100)}
+.cac-sub{font-size:11px;color:var(--gray-400)}
+.rate-box{background:var(--blue-lt);border-radius:8px;padding:12px 18px;display:flex;gap:16px;align-items:center}
+.rate-box .ri .rl{font-size:10px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.5px}
+.rate-box .ri select,.rate-box .ri input{border:1.5px solid #c7d9f8;border-radius:6px;padding:5px 8px;font-size:13px;font-weight:600;color:var(--navy);background:#fff;font-family:inherit;outline:none}
+.rate-box .ri input{width:72px;text-align:center;font-family:'DM Mono',monospace}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+.card{background:#fff;border:1px solid var(--gray-200);border-radius:var(--r);padding:16px 18px}
+.card .cl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gray-400);margin-bottom:6px}
+.card .cv{font-size:20px;font-weight:700;color:var(--navy);font-family:'DM Mono',monospace}
+.card.blue .cv{color:var(--blue)}.card.green .cv{color:var(--green)}.card.amber .cv{color:var(--amber)}
+.tbl-container{position:relative}
+.tbl-overlay{display:none;position:absolute;inset:0;background:rgba(255,255,255,.8);z-index:10;align-items:center;justify-content:center;border-radius:var(--r)}
+.tbl-overlay.show{display:flex}
+.spinner{width:32px;height:32px;border:3px solid var(--gray-200);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.6);border-top-color:white;border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle;margin-left:6px}
+.tbl-wrap{background:#fff;border:1px solid var(--gray-200);border-radius:var(--r);overflow-x:auto;margin-bottom:0}
+table{width:100%;border-collapse:collapse;min-width:1120px}
+thead tr:first-child th{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:9px 8px 3px}
+.g-base{background:var(--navy);color:#fff}.g-offer{background:var(--blue);color:#fff}.g-cost{background:var(--green);color:#fff}.g-profit{background:var(--amber);color:#fff}
+thead tr:last-child th{font-size:10px;font-weight:600;color:var(--gray-600);padding:5px 8px 7px;border-bottom:2px solid var(--gray-200);white-space:nowrap;background:#fff}
+thead tr:last-child th.offer{background:#f0f7ff}thead tr:last-child th.cost{background:#f0fff8}thead tr:last-child th.profit{background:#fffbeb}
+tbody tr{border-bottom:1px solid var(--gray-100)}
+tbody tr:hover td{filter:brightness(.97)}
+td{padding:5px 5px;vertical-align:middle}
+td.offer{background:#f8fbff}td.cost{background:#f5fffb}td.profit{background:#fffef5}
+td input{width:100%;border:1.5px solid transparent;border-radius:5px;padding:5px 7px;font-family:'DM Mono',monospace;font-size:12px;color:var(--gray-900);background:transparent;text-align:right;outline:none;transition:border .15s,background .15s}
+td input[type=text]{text-align:left;font-family:'DM Sans',sans-serif}
+td input:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(26,86,219,.08)}
+td.auto{font-family:'DM Mono',monospace;font-size:12px;text-align:right;padding-right:10px;color:var(--gray-700)}
+td.auto.pos{color:var(--green);font-weight:600}td.auto.neg{color:var(--red)}
+td.rn{font-size:11px;color:var(--gray-400);text-align:center;width:28px;font-family:'DM Mono',monospace}
+td select.ms{border:1.5px solid var(--gray-200);border-radius:5px;padding:5px 4px;font-family:inherit;font-size:11px;color:var(--gray-700);background:#fff;width:100%;outline:none}
+td.ac{width:26px;text-align:center}
+td.ac button{background:none;border:none;cursor:pointer;color:var(--gray-400);font-size:16px;line-height:1;padding:2px 4px;border-radius:4px;transition:color .15s,background .15s}
+td.ac button:hover{color:var(--red);background:#fee2e2}
+.hs-chip{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--hs);margin-right:4px;vertical-align:middle}
+.sec-row td{background:var(--gray-100);font-weight:600;font-size:10px;color:var(--gray-600);text-transform:uppercase;letter-spacing:.7px;padding:5px 10px;border-top:2px solid var(--gray-200)}
+tfoot tr{border-top:2px solid var(--gray-200)}
+tfoot td{padding:8px 8px;font-family:'DM Mono',monospace;font-size:12px;font-weight:600;text-align:right;color:var(--gray-900)}
+tfoot td.lbl{font-family:'DM Sans',sans-serif;font-weight:700;color:var(--navy);text-align:right}
+tfoot tr.grand{background:var(--navy)}tfoot tr.grand td{color:#fff}tfoot tr.grand td.lbl{color:rgba(255,255,255,.7)}
+tfoot tr.vat{background:var(--gray-50)}
+tfoot tr.final{background:var(--blue)}tfoot tr.final td{color:#fff;font-size:14px}tfoot tr.final td.lbl{color:rgba(255,255,255,.8)}
+.ctrl{background:#fff;border:1px solid var(--gray-200);border-top:none;border-radius:0 0 var(--r) var(--r);padding:14px 22px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:7px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .18s}
+.btn-p{background:var(--blue);color:#fff}.btn-p:hover{background:#1447c0}
+.btn-g{background:var(--gray-100);color:var(--gray-700);border:1.5px solid var(--gray-200)}.btn-g:hover{background:var(--gray-200)}
+.btn-hs{background:var(--hs);color:#fff}.btn-hs:hover{background:#e8603d}.btn-hs:disabled{background:var(--gray-400);cursor:not-allowed}
+.spacer{flex:1}
+.vr{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--gray-600)}
+.vr input{width:60px;border:1.5px solid var(--gray-200);border-radius:6px;padding:6px 9px;text-align:center;font-family:'DM Mono',monospace;font-size:13px;color:var(--navy);outline:none}
+.vr input:focus{border-color:var(--blue)}
+.status{margin-top:12px;padding:10px 16px;border-radius:8px;font-size:13px;display:none}
+.status.ok{background:#d1fae5;color:#065f46}.status.err{background:#fee2e2;color:#991b1b}.status.loading{background:var(--gray-100);color:var(--gray-600)}
+@media(max-width:700px){.meta{grid-template-columns:1fr 1fr}.cards{grid-template-columns:1fr 1fr}.rate-box{grid-column:span 2}.deal-row{flex-direction:column}}
+@media print{.deal-panel,.ctrl,.status{display:none!important}.hdr{border-radius:0}.tbl-wrap{border-radius:0}}
 </style>
 </head>
-
 <body>
-<div class="header">
-  <div>
-    <h1>&#x1F4CA; Kostologio Ergou</h1>
-    <div class="deal-info" id="dealInfo">Fortosi dedomenon...</div>
-  </div>
-  <div style="display:flex;gap:8px;align-items:center">
-    <button class="btn btn-secondary btn-sm" onclick="loadFromHubSpot()">&#x1F504; Ananewsi</button>
-    <button class="btn btn-success btn-sm" onclick="saveToHubSpot()">&#x1F4BE; Apothikeusi</button>
-  </div>
-</div>
-<div id="notification" class="notification"></div>
-<div class="tabs">
-  <div class="tab active" onclick="switchTab('kostologio')">&#x1F4CB; Kosti Ergou</div>
-  <div class="tab" onclick="switchTab('esoda')">&#x1F4B0; Esoda</div>
-  <div class="tab" onclick="switchTab('calculations')">&#x1F4CA; Calculations</div>
-  <div class="tab" onclick="switchTab('final')">&#x1F3C6; Final Result</div>
+<div class="wrap">
+<div class="hdr">
+  <div class="hdr-icon">&#128203;</div>
+  <h1>&#927;&#953;&#954;&#959;&#957;&#959;&#956;&#953;&#954;&#942; &#928;&#961;&#959;&#963;&#966;&#959;&#961;&#940;</h1>
+  <div class="hs-pill"><span class="hs-dot"></span>HubSpot Connected</div>
 </div>
 
-<!-- TAB 1: KOSTOLOGIO -->
-<div id="tab-kostologio" class="tab-content active">
-  <div class="action-bar">
-    <button class="btn btn-primary btn-sm" onclick="addKostoRow()">+ Prosthetiko Grammi</button>
-    <button class="btn btn-secondary btn-sm" onclick="calcKosto()">&#x1F501; Ypologismos</button>
-    <button class="btn btn-secondary btn-sm" onclick="exportTab1()">&#x1F4E5; Export CSV</button>
-  </div>
-  <div class="section-title">Kosti Ergou - Kataxorisi Kostologiou</div>
-  <div class="table-wrapper">
-    <table id="kostoTable">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Tmima</th>
-          <th>Kategoria</th>
-          <th>Perigrafi</th>
-          <th>Timi/Kosto Monadas (EUR)</th>
-          <th>Posotita</th>
-          <th>Minas</th>
-          <th>Synolo (EUR)</th>
-          <th>Pos. Ekptosis/Promithia (%)</th>
-          <th>Synoliko Kosto me Ekptosi</th>
-          <th>Timi Monadas</th>
-          <th>Teliki Timi Monadas</th>
-          <th>Parastatiko</th>
-          <th>Promithistis</th>
-          <th>Del</th>
-        </tr>
-      </thead>
-      <tbody id="kostoBody"></tbody>
-      <tfoot>
-        <tr class="total-row">
-          <td colspan="7"><strong>SYNOLA</strong></td>
-          <td id="totalSynolo">0.00</td>
-          <td></td>
-          <td id="totalKostoMeEkptosi">0.00</td>
-          <td></td>
-          <td id="totalTelitiTimi">0.00</td>
-          <td colspan="3"></td>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
-  <div class="section-title">Pivot - Ana Kategoria</div>
-  <div class="table-wrapper">
-    <table id="pivotKategoria">
-      <thead><tr><th>Kategoria</th><th>Synoliko Kosto</th><th>Meta Ekptosi</th></tr></thead>
-      <tbody id="pivotKatBody"></tbody>
-    </table>
+<!-- DEAL LOADER -->
+<div class="deal-panel">
+  <div class="panel-label">&#934;&#972;&#961;&#964;&#969;&#963;&#951; &#945;&#960;&#972; HubSpot Deal</div>
+  <div class="deal-row">
+    <div class="deal-search-wrap">
+      <label>&#913;&#957;&#945;&#950;&#942;&#964;&#951;&#963;&#951; Deal</label>
+      <div class="ac-wrap">
+        <input type="text" id="deal-input" placeholder="&#928;&#955;&#951;&#954;&#964;&#961;&#959;&#955;&#959;&#947;&#942;&#963;&#964;&#949; &#972;&#957;&#959;&#956;&#945; deal..." oninput="dealSearch(this.value)" autocomplete="off">
+        <div class="ac-list" id="deal-list" style="display:none"></div>
+      </div>
+      <div class="load-hint" id="load-hint">&#917;&#960;&#953;&#955;&#941;&#958;&#964;&#949; deal &#947;&#953;&#945; &#945;&#965;&#964;&#972;&#956;&#945;&#964;&#951; &#966;&#972;&#961;&#964;&#969;&#963;&#951; &#947;&#961;&#945;&#956;&#956;&#974;&#957;</div>
+    </div>
+    <div class="deal-info" id="deal-info">
+      <div class="di-name" id="di-name">&#8212;</div>
+      <div class="di-meta" id="di-meta"></div>
+    </div>
+    <button class="btn-load" id="load-btn" onclick="loadLineItems()" disabled>&#11015; &#934;&#972;&#961;&#964;&#969;&#963;&#951; &#915;&#961;&#945;&#956;&#956;&#974;&#957;</button>
   </div>
 </div>
 
-<!-- TAB 2: ESODA -->
-<div id="tab-esoda" class="tab-content">
-  <div class="section-title">Esoda - Timologia kai Antagonismos</div>
-  <div class="action-bar">
-    <button class="btn btn-secondary btn-sm" onclick="syncEsodaFromKosto()">&#x1F504; Synxronismos apo Kosti</button>
-    <button class="btn btn-secondary btn-sm" onclick="calcEsoda()">&#x1F501; Ypologismos</button>
+<!-- META -->
+<div class="meta">
+  <div class="fg">
+    <label>&#928;&#961;&#959;&#962; (To)</label>
+    <div class="ac-wrap" style="position:relative">
+      <input type="text" id="meta-to" placeholder="&#913;&#957;&#945;&#950;&#942;&#964;&#951;&#963;&#951; &#949;&#960;&#945;&#966;&#942;&#962; HubSpot..." oninput="cSearch(this.value)" autocomplete="off">
+      <div class="cac-list" id="cac-list" style="display:none"></div>
+    </div>
   </div>
-  <div class="table-wrapper">
-    <table id="esodaTable">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Perigrafi</th>
-          <th>Kategoria</th>
-          <th>Kosto Monadas</th>
-          <th>Posotita</th>
-          <th>Ekptosi (%)</th>
-          <th>Timi Mon. me Ekptosi</th>
-          <th>Meriko Synolo</th>
-          <th>Teliko Synolo</th>
-          <th>Antagonismos 1</th>
-          <th>Antagonismos 2</th>
-          <th>Antagonismos 3</th>
-          <th>Mark Up (%)</th>
-          <th>Discounted MarkUp</th>
-          <th>Promithistis</th>
-          <th>FPA (%)</th>
-          <th>Teliki Timi me FPA</th>
-          <th>Parastatiko</th>
-        </tr>
-      </thead>
-      <tbody id="esodaBody"></tbody>
-      <tfoot>
-        <tr class="total-row">
-          <td colspan="7"><strong>SYNOLA</strong></td>
-          <td id="esTotalMeriko">0.00</td>
-          <td id="esTotalTeliko">0.00</td>
-          <td colspan="3"></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td id="esTotalFPA">0.00</td>
-          <td></td>
-        </tr>
-      </tfoot>
-    </table>
+  <div class="fg"><label>&#917;&#964;&#945;&#953;&#961;&#949;&#943;&#945;</label><input type="text" id="meta-co" placeholder="&#917;&#964;&#945;&#953;&#961;&#949;&#943;&#945;"></div>
+  <div class="fg" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div><label>&#932;&#951;&#955;&#941;&#966;&#969;&#957;&#959;</label><input type="text" id="meta-tel" placeholder="+30..."></div>
+    <div><label>FAX</label><input type="text" id="meta-fax" placeholder="+30..."></div>
   </div>
-  <div class="kpi-grid" id="esodaKPIs">
-    <div class="kpi-card"><div class="kpi-label">Margin %</div><div class="kpi-value" id="kpiMargin">0%</div></div>
-    <div class="kpi-card"><div class="kpi-label">Markup %</div><div class="kpi-value" id="kpiMarkup">0%</div></div>
-    <div class="kpi-card"><div class="kpi-label">Mikto Kerdos</div><div class="kpi-value green" id="kpiMiktoKerdos">0.00</div></div>
-    <div class="kpi-card"><div class="kpi-label">Ekptosi</div><div class="kpi-value" id="kpiEkptosi">0.00</div></div>
-    <div class="kpi-card"><div class="kpi-label">FPA</div><div class="kpi-value" id="kpiFPA">0.00</div></div>
-    <div class="kpi-card"><div class="kpi-label">Promithia Synergati %</div><div class="kpi-value" id="kpiPromithia">0%</div></div>
-  </div>
-  <div class="section-title" style="margin-top:16px">Sympirasma Esodwn</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:600px">
-    <div><label style="font-size:12px;font-weight:600">Promithia Synergati (%)</label>
-    <input type="number" id="promithiaSynergati" value="0" min="0" max="100" step="0.1" onchange="calcEsoda()" style="margin-top:4px"></div>
-    <div><label style="font-size:12px;font-weight:600">Syllogiko FPA (%)</label>
-    <input type="number" id="globalFPA" value="24" min="0" max="100" step="1" onchange="calcEsoda()" style="margin-top:4px"></div>
+  <div class="rate-box">
+    <div class="ri"><div class="rl">&#925;&#972;&#956;&#953;&#963;&#956;&#945;</div>
+      <select id="curr" onchange="recalc()"><option value="EUR">&#8364; EUR</option><option value="USD">$ USD</option><option value="GBP">&#163; GBP</option></select>
+    </div>
+    <div class="ri"><div class="rl">USD Rate</div><input id="usd-rate" type="number" value="1.3" step="0.01" min="0" onchange="recalc()"></div>
   </div>
 </div>
 
-<!-- TAB 3: CALCULATIONS -->
-<div id="tab-calculations" class="tab-content">
-  <div class="section-title">Calculations - Synoptika Stoixeia</div>
-  <div class="kpi-grid">
-    <div class="kpi-card"><div class="kpi-label">Synoliko Kosto</div><div class="kpi-value" id="calcSynKosto">0.00 EUR</div></div>
-    <div class="kpi-card"><div class="kpi-label">Esoda</div><div class="kpi-value green" id="calcEsoda">0.00 EUR</div></div>
-    <div class="kpi-card"><div class="kpi-label">Mikto Kerdos</div><div class="kpi-value" id="calcMiktoKerdos">0.00 EUR</div></div>
-  </div>
-  <div class="section-title">Ana Kategoria</div>
-  <div class="table-wrapper">
+<!-- CARDS -->
+<div class="cards">
+  <div class="card blue"><div class="cl">&#913;&#958;&#943;&#945; &#928;&#961;&#959;&#963;&#966;&#959;&#961;&#940;&#962;</div><div class="cv" id="c-total">&#8364; 0.00</div></div>
+  <div class="card"><div class="cl">&#931;&#965;&#957;&#959;&#955;&#953;&#954;&#972; &#922;&#972;&#963;&#964;&#959;&#962;</div><div class="cv" id="c-cost">&#8364; 0.00</div></div>
+  <div class="card green"><div class="cl">&#922;&#941;&#961;&#948;&#959;&#962;</div><div class="cv" id="c-profit">&#8364; 0.00</div></div>
+  <div class="card amber"><div class="cl">Margin %</div><div class="cv" id="c-margin">0.0%</div></div>
+</div>
+
+<!-- TABLE -->
+<div class="tbl-container">
+  <div class="tbl-overlay" id="tbl-overlay"><div class="spinner"></div></div>
+  <div class="tbl-wrap">
     <table>
       <thead>
         <tr>
-          <th>Kategoria</th>
-          <th>Synoliko Kosto (EUR)</th>
-          <th>Esoda (EUR)</th>
-          <th>Kerdos (EUR)</th>
-          <th>Margin %</th>
+          <th colspan="5" class="g-base">&#914;&#945;&#963;&#953;&#954;&#940; &#931;&#964;&#959;&#953;&#967;&#949;&#943;&#945;</th>
+          <th colspan="4" class="g-offer">&#931;&#964;&#959;&#953;&#967;&#949;&#943;&#945; &#928;&#961;&#959;&#963;&#966;&#959;&#961;&#940;&#962;</th>
+          <th colspan="3" class="g-cost">&#922;&#972;&#963;&#964;&#959;&#962;</th>
+          <th colspan="4" class="g-profit">&#922;&#941;&#961;&#948;&#959;&#962; &amp; Margin</th>
+          <th class="g-base" rowspan="2"></th>
         </tr>
-      </thead>
-      <tbody id="calcCategoryBody"></tbody>
-    </table>
-  </div>
-  <div class="section-title">Stoixeia Symfonias</div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;max-width:900px">
-    <div>
-      <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Politis</label>
-      <select id="calcPolitis">
-        <option value="">-- Epilogi --</option>
-        <option value="Garantziotis">Garantziotis</option>
-        <option value="Stavridis">Stavridis</option>
-        <option value="Dioganis">Dioganis</option>
-      </select>
-    </div>
-    <div>
-      <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Status</label>
-      <select id="calcStatus">
-        <option value="">-- Epilogi --</option>
-        <option value="EFKAIRIA">EFKAIRIA</option>
-        <option value="PROSFORA">PROSFORA</option>
-        <option value="XATHIKE">XATHIKE</option>
-        <option value="TIMOLOGISI">TIMOLOGISI</option>
-      </select>
-    </div>
-    <div>
-      <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Lead Type</label>
-      <select id="calcLead">
-        <option value="">-- Epilogi --</option>
-        <option value="INBOUND">INBOUND</option>
-        <option value="DIRECT">DIRECT</option>
-        <option value="RENEWAL">RENEWAL</option>
-        <option value="INDIRECT">INDIRECT</option>
-      </select>
-    </div>
-    <div>
-      <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Minas</label>
-      <input type="text" id="calcMinas" placeholder="p.x. Ianouarios 2026">
-    </div>
-  </div>
-</div>
-
-<!-- TAB 4: FINAL RESULT -->
-<div id="tab-final" class="tab-content">
-  <div class="section-title">Final Result - Syllogiko Apotelasma Symfonias</div>
-  <div class="table-wrapper">
-    <table class="final-table">
-      <thead>
         <tr>
-          <th>Politis</th><th>Pelatis</th><th>Ergo</th><th>Minas</th><th>Status</th>
-          <th>Syn. Kosto</th><th>Esoda</th><th>Mikto Kerdos</th>
-          <th>Promithia Syn.</th><th>Mark Up %</th><th>Margin %</th>
-          <th>EXOPLISMOS</th><th>YPIRESIES</th><th>ALLA EXODA</th>
-          <th>MIKROYLIKA</th><th>ACCESSORIES</th><th>LOGISMIKO</th><th>METAFORIKA</th>
-          <th>Lead</th><th>Ektimisi Enarxis</th><th>Im. Kleisimatos</th>
+          <th style="width:28px">#</th>
+          <th style="min-width:80px">SKU</th>
+          <th style="min-width:180px">&#928;&#949;&#961;&#953;&#947;&#961;&#945;&#966;&#942;</th>
+          <th style="min-width:85px" class="offer">&#932;&#953;&#956;&#942; &#924;&#959;&#957;.</th>
+          <th style="min-width:55px">&#932;&#949;&#956;.</th>
+          <th style="min-width:95px" class="offer">&#932;&#953;&#956;&#942; &#931;&#965;&#957;&#972;&#955;&#959;&#965;</th>
+          <th style="min-width:85px" class="offer">&#932;&#953;&#956;&#959;&#954;&#945;&#964;/&#947;&#959;&#962;</th>
+          <th style="min-width:65px" class="offer">&#904;&#954;&#960;&#964;&#969;&#963;&#951; %</th>
+          <th style="min-width:95px" class="offer">&#922;&#972;&#963;&#964;&#959;&#962; &#914;&#940;&#963;&#951;</th>
+          <th style="min-width:85px" class="cost">&#917;&#953;&#948;&#953;&#954;&#942; &#932;&#953;&#956;&#942;</th>
+          <th style="min-width:85px" class="cost">&#922;&#972;&#963;&#964;&#959;&#962; &#924;&#959;&#957;.</th>
+          <th style="min-width:95px" class="cost">&#931;&#973;&#957;. &#922;&#972;&#963;&#964;&#959;&#965;&#962;</th>
+          <th style="min-width:85px" class="profit">&#922;&#941;&#961;&#948;&#959;&#962;</th>
+          <th style="min-width:95px" class="profit">&#931;&#965;&#957;. &#922;&#941;&#961;&#948;&#959;&#962;</th>
+          <th style="min-width:55px" class="profit">MRG%</th>
+          <th style="min-width:90px" class="profit">&#933;&#960;&#959;&#967;&#961;/&#954;&#972;</th>
         </tr>
       </thead>
-      <tbody id="finalBody"></tbody>
+      <tbody id="tbody"></tbody>
+      <tfoot>
+        <tr class="grand">
+          <td colspan="5" class="lbl">&#915;&#949;&#957;&#953;&#954;&#972; &#931;&#973;&#957;&#959;&#955;&#959;</td>
+          <td id="f-tp">0.00</td><td></td><td></td><td></td><td></td><td></td>
+          <td id="f-tc">0.00</td><td id="f-pr">0.00</td><td id="f-pr2">0.00</td>
+          <td id="f-mrg">0.0%</td><td></td><td></td>
+        </tr>
+        <tr class="vat">
+          <td colspan="5" class="lbl">&#934;&#928;&#913; (<span id="vat-lbl">24</span>%)</td>
+          <td id="f-vat">0.00</td><td colspan="11"></td>
+        </tr>
+        <tr class="final">
+          <td colspan="5" class="lbl">&#932;&#949;&#955;&#953;&#954;&#972; &#922;&#972;&#963;&#964;&#959;&#962; (&#956;&#949; &#934;&#928;&#913;)</td>
+          <td id="f-final">0.00</td><td colspan="11"></td>
+        </tr>
+      </tfoot>
     </table>
-  </div>
-  <div class="action-bar" style="margin-top:16px">
-    <button class="btn btn-primary" onclick="generateFinalResult()">&#x1F501; Enimerotiki Final Result</button>
-    <button class="btn btn-success" onclick="saveToHubSpot()">&#x1F4BE; Apotheikefsi sto HubSpot</button>
-    <button class="btn btn-secondary" onclick="exportFinalCSV()">&#x1F4E5; Export CSV</button>
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:500px;margin-top:16px">
-    <div>
-      <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Ektimisi Enarxis</label>
-      <input type="date" id="finalEnarxi" style="padding:6px;border:1px solid #cbd5e0;border-radius:4px;font-size:12px;width:100%">
-    </div>
-    <div>
-      <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Im. Kleisimatos</label>
-      <input type="date" id="finalKleisimo" style="padding:6px;border:1px solid #cbd5e0;border-radius:4px;font-size:12px;width:100%">
-    </div>
   </div>
 </div>
 
+<!-- CONTROLS -->
+<div class="ctrl">
+  <button class="btn btn-p" onclick="addRow()">&#65291; &#915;&#961;&#945;&#956;&#956;&#942;</button>
+  <button class="btn btn-g" onclick="addSection()">&#8213; &#916;&#953;&#945;&#967;&#969;&#961;&#953;&#963;&#964;&#953;&#954;&#972;</button>
+  <button class="btn btn-g" onclick="clearAll()">&#8635; &#922;&#945;&#952;&#945;&#961;&#953;&#963;&#956;&#972;&#962;</button>
+  <button class="btn btn-g" onclick="window.print()">&#128424; &#917;&#954;&#964;&#973;&#960;&#969;&#963;&#951;</button>
+  <div class="spacer"></div>
+  <div class="vr"><label>&#934;&#928;&#913; %</label><input type="number" id="vat" value="24" min="0" max="100" onchange="recalc()"></div>
+  <button class="btn btn-hs" id="hs-save-btn" onclick="saveDeal()">&#913;&#960;&#959;&#952;&#942;&#954;&#949;&#965;&#963;&#951; &#963;&#964;&#959; HubSpot &#8599;</button>
+</div>
+<div class="status" id="status"></div>
+</div>
 <script>
-// ===== CONSTANTS =====
-const KATEGORIAI = ['EXOPLISMOS','YPIRESIES','ALLA EXODA','MIKROYLIKA','ACCESSORIES','LOGISMIKO','METAFORIKA'];
-const PARASTATIKA = ['Timologio','Apostoli','Deltio Paraggelias','Symbasi','Proforma'];
-const MONTHS = ['Ianouarios','Fevrouarios','Martios','Aprilios','Maios','Iounios','Ioulios','Avgoustos','Septemvrios','Oktovrios','Noemvrios','Dekemvrios'];
+let rows=[],rc=0,selDeal=null,selContact=null,dealTimer=null,cTimer=null;
+const fmt=v=>(+v||0).toLocaleString('el-GR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const sym=()=>{const c=document.getElementById('curr').value;return c==='USD'?'$':c==='GBP'?'\u00a3':'\u20ac'};
+const API='https://api.anthropic.com/v1/messages';
+const MCP={type:'url',url:'https://mcp.hubspot.com/anthropic',name:'hubspot'};
+const STAGES={'appointmentscheduled':'\u03a0\u03c1\u03bf\u03b3\u03c1. \u03a3\u03c5\u03bd\u03ac\u03bd\u03c4\u03b7\u03c3\u03b7','qualifiedtobuy':'\u03a0\u03c1\u03bf\u03b5\u03c0\u03b9\u03bb\u03b5\u03b3\u03bc\u03ad\u03bd\u03bf','presentationscheduled':'\u03a0\u03b1\u03c1\u03bf\u03c5\u03c3\u03af\u03b1\u03c3\u03b7','decisionmakerboughtin':'\u0391\u03c0\u03cc\u03c6\u03b1\u03c3\u03b7','contractsent':'\u03a3\u03cd\u03bc\u03b2\u03b1\u03c3\u03b7','closedwon':'\u039a\u03bb\u03b5\u03b9\u03c3\u03c4\u03cc Won','closedlost':'\u039a\u03bb\u03b5\u03b9\u03c3\u03c4\u03cc Lost'};
 
-// Global state
-let dealData = {};
-let kostoRows = [];
-let esodaRows = [];
-let hsPortalId = null;
-let hsDealId = null;
-
-// ===== INIT =====
-function init() {
-  // Parse HubSpot context from URL or parent frame
-  try {
-    const params = new URLSearchParams(window.location.search);
-    hsDealId = params.get('dealId') || params.get('associatedObjectId');
-    hsPortalId = params.get('portalId');
-    if (hsDealId) {
-      document.getElementById('dealInfo').textContent = 'Deal ID: ' + hsDealId;
-      loadFromHubSpot();
-    } else {
-      document.getElementById('dealInfo').textContent = 'Standalone mode - Eisagage Deal ID gia sindesi me HubSpot';
-      addDefaultRows();
-    }
-  } catch(e) {
-    document.getElementById('dealInfo').textContent = 'Demo mode';
-    addDefaultRows();
-  }
+async function callClaude(system,prompt){
+  const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,
+      system,messages:[{role:'user',content:prompt}],mcp_servers:[MCP]})});
+  const d=await r.json();
+  return (d.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
 }
 
-function addDefaultRows() {
-  KATEGORIAI.forEach(kat => {
-    addKostoRow(kat, 'Nea kataxorisi', 0, 1);
-  });
-  syncEsodaFromKosto();
-}
+function parseJSON(text){try{return JSON.parse(text.replace(/```json|```/g,'').trim());}catch(e){return null;}}
+function setStatus(msg,type){const el=document.getElementById('status');el.textContent=msg;el.className='status '+type;el.style.display=msg?'block':'none';}
+function isSection(n){const r=document.getElementById('r'+n);return r&&r.classList.contains('sec-row');}
 
-// ===== TAB SWITCHING =====
-function switchTab(tabId) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  document.getElementById('tab-' + tabId).classList.add('active');
-  event.target.classList.add('active');
-  if (tabId === 'calculations') updateCalculations();
-  if (tabId === 'final') generateFinalResult();
-}
-
-// ===== NOTIFICATION =====
-function showNotif(msg, type) {
-  const n = document.getElementById('notification');
-  n.textContent = msg;
-  n.className = 'notification' + (type === 'error' ? ' error' : '');
-  n.style.display = 'block';
-  setTimeout(() => n.style.display = 'none', 4000);
-}
-
-// ===== SHEET 1: KOSTO ROWS =====
-function addKostoRow(kat, desc, price, qty) {
-  const body = document.getElementById('kostoBody');
-  const idx = body.rows.length + 1;
-  const tr = document.createElement('tr');
-  tr.innerHTML = `
-    <td>${idx}</td>
-    <td><input type="text" class="tmima" value="" placeholder="Tmima"></td>
-    <td><select class="kategoria" onchange="calcKosto()">
-      ${KATEGORIAI.map(k => '<option value="'+k+'"'+(k===(kat||KATEGORIAI[0])?' selected':'')+'>'+k+'</option>').join('')}
-    </select></td>
-    <td><input type="text" class="perigrafi" value="${desc||''}" placeholder="Perigrafi"></td>
-    <td><input type="number" class="timiMonadas" value="${price||0}" min="0" step="0.01" onchange="calcKosto()"></td>
-    <td><input type="number" class="posotita" value="${qty||1}" min="0" step="1" onchange="calcKosto()"></td>
-    <td><select class="minas">${MONTHS.map(m => '<option>'+m+'</option>').join('')}</select></td>
-    <td class="synolo">0.00</td>
-    <td><input type="number" class="ekptosi" value="0" min="0" max="100" step="0.1" onchange="calcKosto()"></td>
-    <td class="kostoMeEkptosi">0.00</td>
-    <td class="timiMon2">0.00</td>
-    <td class="telitiTiMon">0.00</td>
-    <td><select class="parastatiko">${PARASTATIKA.map(p => '<option>'+p+'</option>').join('')}</select></td>
-    <td><input type="text" class="promithistis" value="" placeholder="Promithistis"></td>
-    <td><button class="del-btn" onclick="delRow(this,'kostoBody')">x</button></td>
-  `;
-  body.appendChild(tr);
-  calcKosto();
-}
-
-
-function delRow(btn, tbodyId) {
-  btn.closest('tr').remove();
-  calcKosto();
-  renumberRows(tbodyId);
-}
-
-function renumberRows(tbodyId) {
-  const body = document.getElementById(tbodyId);
-  Array.from(body.rows).forEach((r, i) => { if (r.cells[0]) r.cells[0].textContent = i + 1; });
-}
-
-function calcKosto() {
-  const body = document.getElementById('kostoBody');
-  let totalSyn = 0, totalMeEkptosi = 0, totalTelitiTimi = 0;
-  const pivotData = {};
-  KATEGORIAI.forEach(k => pivotData[k] = { syn: 0, meEkptosi: 0 });
-
-  Array.from(body.rows).forEach(tr => {
-    const timi = parseFloat(tr.querySelector('.timiMonadas')?.value) || 0;
-    const pos = parseFloat(tr.querySelector('.posotita')?.value) || 0;
-    const ekp = parseFloat(tr.querySelector('.ekptosi')?.value) || 0;
-    const kat = tr.querySelector('.kategoria')?.value || '';
-    const syn = timi * pos;
-    const meEkp = syn * (1 - ekp / 100);
-    const timiMon2 = timi * (1 - ekp / 100);
-    tr.querySelector('.synolo').textContent = syn.toFixed(2);
-    tr.querySelector('.kostoMeEkptosi').textContent = meEkp.toFixed(2);
-    tr.querySelector('.timiMon2').textContent = timiMon2.toFixed(2);
-    tr.querySelector('.telitiTiMon').textContent = timiMon2.toFixed(2);
-    totalSyn += syn;
-    totalMeEkptosi += meEkp;
-    totalTelitiTimi += timiMon2 * pos;
-    if (pivotData[kat]) { pivotData[kat].syn += syn; pivotData[kat].meEkptosi += meEkp; }
-  });
-
-  document.getElementById('totalSynolo').textContent = totalSyn.toFixed(2);
-  document.getElementById('totalKostoMeEkptosi').textContent = totalMeEkptosi.toFixed(2);
-  document.getElementById('totalTelitiTimi').textContent = totalTelitiTimi.toFixed(2);
-
-  const pivotBody = document.getElementById('pivotKatBody');
-  pivotBody.innerHTML = '';
-  KATEGORIAI.forEach(k => {
-    if (pivotData[k].syn > 0) {
-      const tr2 = pivotBody.insertRow();
-      tr2.innerHTML = '<td>' + k + '</td><td>' + pivotData[k].syn.toFixed(2) + '</td><td>' + pivotData[k].meEkptosi.toFixed(2) + '</td>';
-    }
-  });
-}
-
-function syncEsodaFromKosto() {
-  const kostoBody = document.getElementById('kostoBody');
-  const esodaBody = document.getElementById('esodaBody');
-  esodaBody.innerHTML = '';
-  Array.from(kostoBody.rows).forEach((tr, i) => {
-    const perigrafi = tr.querySelector('.perigrafi')?.value || '';
-    const kat = tr.querySelector('.kategoria')?.value || '';
-    const kostoMon = parseFloat(tr.querySelector('.timiMonadas')?.value) || 0;
-    const pos = parseFloat(tr.querySelector('.posotita')?.value) || 1;
-    addEsodaRow(i + 1, perigrafi, kat, kostoMon, pos);
-  });
-  calcEsoda();
-}
-
-function addEsodaRow(idx, perigrafi, kat, kostoMon, pos) {
-  const body = document.getElementById('esodaBody');
-  const tr = document.createElement('tr');
-  tr.innerHTML = `
-    <td>${idx}</td>
-    <td><input type="text" class="esPerig" value="${perigrafi}"></td>
-    <td><select class="esKat">${KATEGORIAI.map(k => '<option value="'+k+'"'+(k===kat?' selected':'')+'>'+k+'</option>').join('')}</select></td>
-    <td class="esKostoMon">${kostoMon.toFixed(2)}</td>
-    <td><input type="number" class="esPosotita" value="${pos}" min="0" step="1" onchange="calcEsoda()"></td>
-    <td><input type="number" class="esEkptosi" value="0" min="0" max="100" step="0.1" onchange="calcEsoda()"></td>
-    <td class="esTimiMonEkp">0.00</td>
-    <td class="esMeriko">0.00</td>
-    <td class="esTeliko">0.00</td>
-    <td><input type="number" class="esAntagI" value="0" step="0.01" min="0"></td>
-    <td><input type="number" class="esAntagII" value="0" step="0.01" min="0"></td>
-    <td><input type="number" class="esAntagIII" value="0" step="0.01" min="0"></td>
-    <td><input type="number" class="esMarkup" value="20" min="0" step="0.1" onchange="calcEsoda()"></td>
-    <td class="esDiscMarkup">0.00</td>
-    <td><input type="text" class="esProm" value="" placeholder="Promithistis"></td>
-    <td><input type="number" class="esFPA" value="24" min="0" max="100" step="1" onchange="calcEsoda()"></td>
-    <td class="esTelitiMeFPA">0.00</td>
-    <td><select class="esParastatiko">${PARASTATIKA.map(p => '<option>'+p+'</option>').join('')}</select></td>
-  `;
-  body.appendChild(tr);
-}
-
-
-function calcEsoda() {
-  const body = document.getElementById('esodaBody');
-  let totalMeriko = 0, totalTeliko = 0, totalKosto = 0, totalFPA = 0, totalEkptosi = 0;
-  const promithia = parseFloat(document.getElementById('promithiaSynergati')?.value) || 0;
-  const globalFPA = parseFloat(document.getElementById('globalFPA')?.value) || 24;
-
-  Array.from(body.rows).forEach(tr => {
-    const kostoMon = parseFloat(tr.querySelector('.esKostoMon')?.textContent) || 0;
-    const pos = parseFloat(tr.querySelector('.esPosotita')?.value) || 1;
-    const ekp = parseFloat(tr.querySelector('.esEkptosi')?.value) || 0;
-    const markup = parseFloat(tr.querySelector('.esMarkup')?.value) || 0;
-    const fpa = parseFloat(tr.querySelector('.esFPA')?.value) || globalFPA;
-
-    const markupPrice = kostoMon * (1 + markup / 100);
-    const timiMonEkp = markupPrice * (1 - ekp / 100);
-    const meriko = kostoMon * pos;
-    const teliko = markupPrice * pos;
-    const ekptAmt = (markupPrice - timiMonEkp) * pos;
-    const telikoMeFPA = teliko * (1 + fpa / 100);
-    const discMarkup = timiMonEkp;
-
-    tr.querySelector('.esTimiMonEkp').textContent = timiMonEkp.toFixed(2);
-    tr.querySelector('.esMeriko').textContent = meriko.toFixed(2);
-    tr.querySelector('.esTeliko').textContent = teliko.toFixed(2);
-    tr.querySelector('.esDiscMarkup').textContent = discMarkup.toFixed(2);
-    tr.querySelector('.esTelitiMeFPA').textContent = telikoMeFPA.toFixed(2);
-
-    totalMeriko += meriko;
-    totalTeliko += teliko;
-    totalKosto += meriko;
-    totalFPA += teliko * (fpa / 100);
-    totalEkptosi += ekptAmt;
-  });
-
-  document.getElementById('esTotalMeriko').textContent = totalMeriko.toFixed(2);
-  document.getElementById('esTotalTeliko').textContent = totalTeliko.toFixed(2);
-  document.getElementById('esTotalFPA').textContent = totalFPA.toFixed(2);
-
-  const miktoKerdos = totalTeliko - totalMeriko;
-  const margin = totalTeliko > 0 ? (miktoKerdos / totalTeliko * 100) : 0;
-  const markup_pct = totalMeriko > 0 ? (miktoKerdos / totalMeriko * 100) : 0;
-  const promAmt = totalTeliko * (promithia / 100);
-
-  document.getElementById('kpiMargin').textContent = margin.toFixed(1) + '%';
-  document.getElementById('kpiMargin').className = 'kpi-value ' + (margin >= 0 ? 'green' : 'red');
-  document.getElementById('kpiMarkup').textContent = markup_pct.toFixed(1) + '%';
-  document.getElementById('kpiMiktoKerdos').textContent = miktoKerdos.toFixed(2) + ' EUR';
-  document.getElementById('kpiMiktoKerdos').className = 'kpi-value ' + (miktoKerdos >= 0 ? 'green' : 'red');
-  document.getElementById('kpiEkptosi').textContent = totalEkptosi.toFixed(2) + ' EUR';
-  document.getElementById('kpiFPA').textContent = totalFPA.toFixed(2) + ' EUR';
-  document.getElementById('kpiPromithia').textContent = promithia.toFixed(1) + '% (' + promAmt.toFixed(2) + ' EUR)';
-}
-
-function updateCalculations() {
-  const kostoBody = document.getElementById('kostoBody');
-  let totalKosto = 0;
-  const katKosto = {};
-  KATEGORIAI.forEach(k => katKosto[k] = 0);
-
-  Array.from(kostoBody.rows).forEach(tr => {
-    const meEkp = parseFloat(tr.querySelector('.kostoMeEkptosi')?.textContent) || 0;
-    const kat = tr.querySelector('.kategoria')?.value || '';
-    totalKosto += meEkp;
-    if (katKosto[kat] !== undefined) katKosto[kat] += meEkp;
-  });
-
-  const esodaBody = document.getElementById('esodaBody');
-  let totalEsoda = 0;
-  const katEsoda = {};
-  KATEGORIAI.forEach(k => katEsoda[k] = 0);
-
-  Array.from(esodaBody.rows).forEach(tr => {
-    const teliko = parseFloat(tr.querySelector('.esTeliko')?.textContent) || 0;
-    const kat = tr.querySelector('.esKat')?.value || '';
-    totalEsoda += teliko;
-    if (katEsoda[kat] !== undefined) katEsoda[kat] += teliko;
-  });
-
-  const miktoKerdos = totalEsoda - totalKosto;
-  document.getElementById('calcSynKosto').textContent = totalKosto.toFixed(2) + ' EUR';
-  document.getElementById('calcEsoda').textContent = totalEsoda.toFixed(2) + ' EUR';
-  document.getElementById('calcMiktoKerdos').textContent = miktoKerdos.toFixed(2) + ' EUR';
-  document.getElementById('calcMiktoKerdos').className = 'kpi-value ' + (miktoKerdos >= 0 ? 'green' : 'red');
-
-  const calcBody = document.getElementById('calcCategoryBody');
-  calcBody.innerHTML = '';
-  KATEGORIAI.forEach(k => {
-    const kosto = katKosto[k] || 0;
-    const esoda = katEsoda[k] || 0;
-    const kerdos = esoda - kosto;
-    const margin = esoda > 0 ? (kerdos / esoda * 100) : 0;
-    if (kosto > 0 || esoda > 0) {
-      const tr = calcBody.insertRow();
-      tr.innerHTML = '<td>' + k + '</td><td>' + kosto.toFixed(2) + '</td><td>' + esoda.toFixed(2) + '</td><td style="color:' + (kerdos >= 0 ? '#48bb78' : '#fc8181') + '">' + kerdos.toFixed(2) + '</td><td>' + margin.toFixed(1) + '%</td>';
-    }
-  });
-}
-
-
-function generateFinalResult() {
-  updateCalculations();
-  const kostoBody = document.getElementById('kostoBody');
-  let totalKosto = 0;
-  const katKosto = {};
-  KATEGORIAI.forEach(k => katKosto[k] = 0);
-  Array.from(kostoBody.rows).forEach(tr => {
-    const meEkp = parseFloat(tr.querySelector('.kostoMeEkptosi')?.textContent) || 0;
-    const kat = tr.querySelector('.kategoria')?.value || '';
-    totalKosto += meEkp;
-    if (katKosto[kat] !== undefined) katKosto[kat] += meEkp;
-  });
-
-  const esodaBody = document.getElementById('esodaBody');
-  let totalEsoda = 0;
-  const katEsoda = {};
-  KATEGORIAI.forEach(k => katEsoda[k] = 0);
-  Array.from(esodaBody.rows).forEach(tr => {
-    const teliko = parseFloat(tr.querySelector('.esTeliko')?.textContent) || 0;
-    const kat = tr.querySelector('.esKat')?.value || '';
-    totalEsoda += teliko;
-    if (katEsoda[kat] !== undefined) katEsoda[kat] += teliko;
-  });
-
-  const miktoKerdos = totalEsoda - totalKosto;
-  const margin = totalEsoda > 0 ? (miktoKerdos / totalEsoda * 100) : 0;
-  const markup_pct = totalKosto > 0 ? (miktoKerdos / totalKosto * 100) : 0;
-  const promithia = parseFloat(document.getElementById('promithiaSynergati')?.value) || 0;
-  const promAmt = totalEsoda * (promithia / 100);
-  const politis = document.getElementById('calcPolitis')?.value || '';
-  const status = document.getElementById('calcStatus')?.value || '';
-  const lead = document.getElementById('calcLead')?.value || '';
-  const minas = document.getElementById('calcMinas')?.value || '';
-  const enarxi = document.getElementById('finalEnarxi')?.value || '';
-  const kleisimo = document.getElementById('finalKleisimo')?.value || '';
-  const pelatis = dealData.dealname || 'N/A';
-
-  const finalBody = document.getElementById('finalBody');
-  finalBody.innerHTML = '';
-  const tr = finalBody.insertRow();
-  tr.innerHTML = [
-    politis, pelatis, pelatis, minas, status,
-    totalKosto.toFixed(2), totalEsoda.toFixed(2), miktoKerdos.toFixed(2),
-    promAmt.toFixed(2), markup_pct.toFixed(1) + '%', margin.toFixed(1) + '%',
-    (katEsoda['EXOPLISMOS'] || 0).toFixed(2),
-    (katEsoda['YPIRESIES'] || 0).toFixed(2),
-    (katEsoda['ALLA EXODA'] || 0).toFixed(2),
-    (katEsoda['MIKROYLIKA'] || 0).toFixed(2),
-    (katEsoda['ACCESSORIES'] || 0).toFixed(2),
-    (katEsoda['LOGISMIKO'] || 0).toFixed(2),
-    (katEsoda['METAFORIKA'] || 0).toFixed(2),
-    lead, enarxi, kleisimo
-  ].map(v => '<td>' + v + '</td>').join('');
-}
-
-// ===== HUBSPOT INTEGRATION =====
-function loadFromHubSpot() {
-  if (!hsDealId || !hsPortalId) {
-    showNotif('Den vrethike Deal ID. Chrisimopoisie standalone mode.', 'error');
-    addDefaultRows();
-    return;
-  }
-  document.getElementById('dealInfo').textContent = 'Fortosi deal ' + hsDealId + '...';
-  fetch('/api/v1/deals/' + hsDealId + '?portalId=' + hsPortalId)
-    .then(r => r.json())
-    .then(data => {
-      dealData = data.properties || {};
-      document.getElementById('dealInfo').textContent = (dealData.dealname || 'Deal') + ' | ' + (dealData.dealstage || '') + ' | Owner: ' + (dealData.hubspot_owner_id || '');
-      loadLineItems();
-    })
-    .catch(() => {
-      document.getElementById('dealInfo').textContent = 'Demo mode - HubSpot API unavailable';
-      addDefaultRows();
-    });
-}
-
-function loadLineItems() {
-  if (!hsDealId) return;
-  fetch('/api/v1/deals/' + hsDealId + '/associations/line_items?portalId=' + hsPortalId)
-    .then(r => r.json())
-    .then(data => {
-      const lineItemIds = (data.results || []).map(r => r.id);
-      if (lineItemIds.length === 0) { addDefaultRows(); return; }
-      Promise.all(lineItemIds.map(id =>
-        fetch('/api/v1/line_items/' + id + '?portalId=' + hsPortalId).then(r => r.json())
-      )).then(items => {
-        const body = document.getElementById('kostoBody');
-        body.innerHTML = '';
-        items.forEach((item, i) => {
-          const p = item.properties || {};
-          addKostoRow(
-            p.hs_product_type || KATEGORIAI[i % KATEGORIAI.length],
-            p.name || p.hs_sku || 'Item ' + (i+1),
-            parseFloat(p.price) || 0,
-            parseFloat(p.quantity) || 1
-          );
-        });
-        syncEsodaFromKosto();
-        showNotif('Fortothikan ' + items.length + ' line items apo to HubSpot!');
+function dealSearch(q){
+  clearTimeout(dealTimer);
+  const list=document.getElementById('deal-list');
+  if(!q||q.length<2){list.style.display='none';return;}
+  dealTimer=setTimeout(async()=>{
+    list.innerHTML='<div class="ac-item"><div class="ac-name" style="color:#94a3b8">\u0391\u03bd\u03b1\u03b6\u03ae\u03c4\u03b7\u03c3\u03b7 deals...</div></div>';
+    list.style.display='block';
+    try{
+      const text=await callClaude(
+        'You are a HubSpot assistant. Return ONLY a JSON array: [{"id":"...","name":"...","amount":"...","stage":"...","company":"..."}]. No markdown.',
+        'Search HubSpot deals matching "'+q+'". Return up to 8 results as JSON array.'
+      );
+      const deals=parseJSON(text)||[];
+      list.innerHTML='';
+      if(!deals.length){list.innerHTML='<div class="ac-item"><div class="ac-name" style="color:#94a3b8">\u0394\u03b5\u03bd \u03b2\u03c1\u03ad\u03b8\u03b7\u03ba\u03b1\u03bd deals</div></div>';return;}
+      deals.forEach(d=>{
+        const el=document.createElement('div');el.className='ac-item';
+        const amt=d.amount?'\u20ac'+fmt(d.amount):'\u2014';
+        const stage=STAGES[d.stage]||d.stage||'';
+        el.innerHTML='<div class="ac-name">'+(d.name||'\u2014')+'</div><div class="ac-sub"><span class="ac-amt">'+amt+'</span>'+(stage?'<span>'+stage+'</span>':'')+'</div>';
+        el.onclick=()=>selectDeal(d);
+        list.appendChild(el);
       });
-    })
-    .catch(() => addDefaultRows());
+    }catch(e){list.innerHTML='<div class="ac-item"><div class="ac-name" style="color:#dc2626;font-size:12px">\u03a3\u03c6\u03ac\u03bb\u03bc\u03b1 \u03c3\u03cd\u03bd\u03b4\u03b5\u03c3\u03b7\u03c2 HubSpot</div></div>';}
+  },400);
 }
 
-function saveToHubSpot() {
-  generateFinalResult();
-  const totalKostoEl = document.getElementById('calcSynKosto');
-  const totalEsodaEl = document.getElementById('calcEsoda');
-  if (!hsDealId) { showNotif('Apotheikefsi topika (enimerwthike i othoni). Gia synxronismo me HubSpot, anoixte apo Deal record.'); return; }
-  const payload = {
-    properties: {
-      amount: parseFloat(document.getElementById('esTotalTeliko')?.textContent) || 0,
-      description: 'Kostologio ypologistike - ' + new Date().toLocaleDateString('el-GR')
+function selectDeal(d){
+  selDeal=d;
+  document.getElementById('deal-input').value=d.name||'';
+  document.getElementById('deal-list').style.display='none';
+  const box=document.getElementById('deal-info');box.style.display='block';
+  document.getElementById('di-name').textContent=d.name||'\u2014';
+  const stage=STAGES[d.stage]||d.stage||'';
+  document.getElementById('di-meta').innerHTML=
+    '<span>\ud83d\udcb0 '+(d.amount?'\u20ac'+fmt(d.amount):'\u2014')+'</span>'+
+    (stage?'<span>\ud83d\udccd '+stage+'</span>':'')+
+    (d.company?'<span>\ud83c\udfe2 '+d.company+'</span>':'');
+  document.getElementById('load-btn').disabled=false;
+  document.getElementById('load-hint').textContent='Deal ID: '+d.id+' \u00b7 \u039a\u03ac\u03bd\u03c4\u03b5 \u03ba\u03bb\u03b9\u03ba "\u03a6\u03cc\u03c1\u03c4\u03c9\u03c3\u03b7 \u0393\u03c1\u03b1\u03bc\u03bc\u03ce\u03bd"';
+}
+
+async function loadLineItems(){
+  if(!selDeal)return;
+  const btn=document.getElementById('load-btn');
+  const overlay=document.getElementById('tbl-overlay');
+  btn.disabled=true;btn.textContent='\u23f3 \u03a6\u03cc\u03c1\u03c4\u03c9\u03c3\u03b7...';
+  overlay.classList.add('show');
+  setStatus('\u03a6\u03cc\u03c1\u03c4\u03c9\u03c3\u03b7 \u03b3\u03c1\u03b1\u03bc\u03bc\u03ce\u03bd \u03b1\u03c0\u03cc deal "'+selDeal.name+'"...','loading');
+  try{
+    const text=await callClaude(
+      'You are a HubSpot assistant. Fetch line items for a deal and return ONLY a JSON array:\n[{"name":"...","sku":"...","price":0,"quantity":1,"discount":0}]\nprice: unit price as number. quantity: number. discount: discount percentage as number (0 if none). sku: product code or "".\nReturn [] if no line items. NO markdown, NO extra text.',
+      'Fetch all line items for HubSpot deal ID '+selDeal.id+'. Return as plain JSON array.'
+    );
+    const items=parseJSON(text)||[];
+    if(!items.length){
+      setStatus('\u0394\u03b5\u03bd \u03b2\u03c1\u03ad\u03b8\u03b7\u03ba\u03b1\u03bd \u03b3\u03c1\u03b1\u03bc\u03bc\u03ad\u03c2 \u03b3\u03b9\u03b1 \u03b1\u03c5\u03c4\u03cc \u03c4\u03bf deal. \u039c\u03c0\u03bf\u03c1\u03b5\u03af\u03c4\u03b5 \u03bd\u03b1 \u03c4\u03b9\u03c2 \u03c0\u03c1\u03bf\u03c3\u03b8\u03ad\u03c3\u03b5\u03c4\u03b5 \u03c7\u03b5\u03b9\u03c1\u03bf\u03ba\u03af\u03bd\u03b7\u03c4\u03b1.','err');
+    }else{
+      document.getElementById('tbody').innerHTML='';rows=[];rc=0;
+      items.forEach(it=>addRow({code:it.sku||'',desc:it.name||'',up:+it.price||0,qty:+it.quantity||1,disc:+it.discount||0,fromHs:true}));
+      if(selDeal.company&&!document.getElementById('meta-co').value)
+        document.getElementById('meta-co').value=selDeal.company;
+      setStatus('\u2713 \u03a6\u03bf\u03c1\u03c4\u03ce\u03b8\u03b7\u03ba\u03b1\u03bd '+items.length+' \u03b3\u03c1\u03b1\u03bc\u03bc\u03ad\u03c2 \u03b1\u03c0\u03cc "'+selDeal.name+'".','ok');
     }
-  };
-  fetch('/api/v1/deals/' + hsDealId + '?portalId=' + hsPortalId, {
-    method: 'PATCH', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  }).then(() => showNotif('Apotheikefthike sto HubSpot!'))
-    .catch(() => showNotif('I apotheikefsi apetixe. Elenxte syndesi.', 'error'));
+  }catch(e){setStatus('\u03a3\u03c6\u03ac\u03bb\u03bc\u03b1 \u03c6\u03cc\u03c1\u03c4\u03c9\u03c3\u03b7\u03c2. \u0394\u03bf\u03ba\u03b9\u03bc\u03ac\u03c3\u03c4\u03b5 \u03be\u03b1\u03bd\u03ac.','err');}
+  btn.disabled=false;btn.innerHTML='\u2b07 \u03a6\u03cc\u03c1\u03c4\u03c9\u03c3\u03b7 \u0393\u03c1\u03b1\u03bc\u03bc\u03ce\u03bd';
+  overlay.classList.remove('show');
 }
 
-function exportTab1() {
-  const body = document.getElementById('kostoBody');
-  let csv = 'AA,Tmima,Kategoria,Perigrafi,Timi Monadas,Posotita,Synolo,Ekptosi,Kosto me Ekptosi,Promithistis\n';
-  Array.from(body.rows).forEach((tr, i) => {
-    csv += [i+1, tr.querySelector('.tmima')?.value||'', tr.querySelector('.kategoria')?.value||'',
-      tr.querySelector('.perigrafi')?.value||'', tr.querySelector('.timiMonadas')?.value||0,
-      tr.querySelector('.posotita')?.value||0, tr.querySelector('.synolo')?.textContent||0,
-      tr.querySelector('.ekptosi')?.value||0, tr.querySelector('.kostoMeEkptosi')?.textContent||0,
-      tr.querySelector('.promithistis')?.value||''].join(',') + '\n';
+function cSearch(q){
+  clearTimeout(cTimer);
+  const list=document.getElementById('cac-list');
+  if(!q||q.length<2){list.style.display='none';return;}
+  cTimer=setTimeout(async()=>{
+    list.innerHTML='<div class="cac-item" style="color:#94a3b8;font-size:11px">\u0391\u03bd\u03b1\u03b6\u03ae\u03c4\u03b7\u03c3\u03b7...</div>';
+    list.style.display='block';
+    try{
+      const text=await callClaude(
+        'Search HubSpot contacts. Return ONLY JSON: [{"name":"...","email":"...","company":"...","id":"..."}]. No markdown.',
+        'Search HubSpot contacts for "'+q+'". Return up to 6 as JSON array.'
+      );
+      const contacts=parseJSON(text)||[];
+      list.innerHTML='';
+      if(!contacts.length){list.innerHTML='<div class="cac-item" style="color:#94a3b8">\u0394\u03b5\u03bd \u03b2\u03c1\u03ad\u03b8\u03b7\u03ba\u03b1\u03bd \u03b1\u03c0\u03bf\u03c4\u03b5\u03bb\u03ad\u03c3\u03bc\u03b1\u03c4\u03b1</div>';return;}
+      contacts.forEach(c=>{
+        const el=document.createElement('div');el.className='cac-item';
+        el.innerHTML='<div>'+(c.name||c.email||'\u2014')+'</div><div class="cac-sub">'+(c.email||'')+' '+(c.company?'\u00b7 '+c.company:'')+'</div>';
+        el.onclick=()=>{
+          document.getElementById('meta-to').value=c.name||c.email||'';
+          if(c.company)document.getElementById('meta-co').value=c.company;
+          selContact=c;list.style.display='none';
+        };
+        list.appendChild(el);
+      });
+    }catch(e){list.innerHTML='<div class="cac-item" style="color:#dc2626;font-size:12px">\u03a3\u03c6\u03ac\u03bb\u03bc\u03b1 \u03c3\u03cd\u03bd\u03b4\u03b5\u03c3\u03b7\u03c2</div>';}
+  },350);
+}
+
+function addRow(d={}){
+  rc++;const n=rc;rows.push(n);
+  const tr=document.createElement('tr');tr.id='r'+n;
+  const chip=d.fromHs?'<span class="hs-chip" title="\u0391\u03c0\u03cc HubSpot"></span>':'';
+  tr.innerHTML=
+  '<td class="rn">'+n+'</td>'+
+  '<td><input type="text" placeholder="SKU" value="'+(d.code||'')+'"></td>'+
+  '<td><input type="text" placeholder="\u03a0\u03b5\u03c1\u03b9\u03b3\u03c1\u03b1\u03c6\u03ae..." value="'+chip+(d.desc||'')+'" style="min-width:160px"></td>'+
+  '<td class="offer"><input type="number" placeholder="0.00" value="'+(d.up||'')+'" step="0.01" min="0" oninput="cr('+n+')"></td>'+
+  '<td><input type="number" placeholder="1" value="'+(d.qty||1)+'" step="1" min="0" oninput="cr('+n+')"></td>'+
+  '<td class="auto offer" id="tp'+n+'">0.00</td>'+
+  '<td class="offer"><input type="number" placeholder="0.00" value="'+(d.lp||'')+'" step="0.01" min="0" oninput="cr('+n+')"></td>'+
+  '<td class="offer"><input type="number" placeholder="0" value="'+(d.disc||0)+'" step="0.1" min="0" max="100" oninput="cr('+n+')"></td>'+
+  '<td class="auto offer" id="cb'+n+'">0.00</td>'+
+  '<td class="cost"><input type="number" placeholder="0.00" value="'+(d.sp||'')+'" step="0.01" min="0" oninput="cr('+n+')"></td>'+
+  '<td class="auto cost" id="cu'+n+'">0.00</td>'+
+  '<td class="auto cost" id="tc'+n+'">0.00</td>'+
+  '<td class="auto profit" id="pu'+n+'">0.00</td>'+
+  '<td class="auto profit" id="pr'+n+'">0.00</td>'+
+  '<td class="auto profit" id="mr'+n+'">0%</td>'+
+  '<td><select class="ms"><option value="1">\u03a5\u03c0\u03bf\u03c7\u03c1.</option><option value="0">\u03a0\u03c1\u03bf\u03b1\u03b9\u03c1.</option></select></td>'+
+  '<td class="ac"><button onclick="delRow('+n+')" title="\u0394\u03b9\u03b1\u03b3\u03c1\u03b1\u03c6\u03ae">\u00d7</button></td>';
+  document.getElementById('tbody').appendChild(tr);cr(n);
+}
+
+function addSection(){
+  const lbl=prompt('\u03a4\u03af\u03c4\u03bb\u03bf\u03c2 \u03ba\u03b1\u03c4\u03b7\u03b3\u03bf\u03c1\u03af\u03b1\u03c2:','\u039a\u03b1\u03c4\u03b7\u03b3\u03bf\u03c1\u03af\u03b1');if(lbl===null)return;
+  rc++;const n=rc;rows.push(n);
+  const tr=document.createElement('tr');tr.id='r'+n;tr.className='sec-row';
+  tr.innerHTML='<td colspan="16">'+lbl+'</td><td class="ac"><button onclick="delRow('+n+')">\u00d7</button></td>';
+  document.getElementById('tbody').appendChild(tr);
+}
+
+function delRow(n){const el=document.getElementById('r'+n);if(el)el.remove();rows=rows.filter(x=>x!==n);recalc();}
+function clearAll(){if(!confirm('\u039a\u03b1\u03b8\u03b1\u03c1\u03b9\u03c3\u03bc\u03cc\u03c2;'))return;document.getElementById('tbody').innerHTML='';rows=[];rc=0;recalc();}
+function getN(row,idx){const ins=document.querySelectorAll('#r'+row+' input[type="number"]');return parseFloat(ins[idx]?.value)||0;}
+
+function cr(n){
+  if(isSection(n))return;
+  const up=getN(n,0),qty=getN(n,1)||1,lp=getN(n,2),disc=getN(n,3),sp=getN(n,4);
+  const tp=up*qty,cb=lp*(1-disc/100),cu=sp>0?sp:cb,tc=cu*qty,pu=up-cu,pr=pu*qty,mrg=up>0?(pu/up*100):0;
+  document.getElementById('tp'+n).textContent=fmt(tp);
+  document.getElementById('cb'+n).textContent=fmt(cb);
+  document.getElementById('cu'+n).textContent=fmt(cu);
+  document.getElementById('tc'+n).textContent=fmt(tc);
+  document.getElementById('pu'+n).textContent=fmt(pu);
+  const pel=document.getElementById('pr'+n);pel.textContent=fmt(pr);pel.className='auto profit '+(pr>=0?'pos':'neg');
+  const mel=document.getElementById('mr'+n);mel.textContent=mrg.toFixed(1)+'%';mel.className='auto profit '+(mrg>=0?'pos':'neg');
+  recalc();
+}
+
+function recalc(){
+  let sP=0,sC=0,sR=0;
+  rows.forEach(n=>{
+    if(isSection(n))return;
+    const p=id=>{const el=document.getElementById(id);if(!el)return 0;return parseFloat(el.textContent?.replace(/\./g,'').replace(',','.'))||0;};
+    sP+=p('tp'+n);sC+=p('tc'+n);sR+=p('pr'+n);
   });
-  downloadCSV(csv, 'kosti_ergou.csv');
+  const vat=parseFloat(document.getElementById('vat').value)||0;
+  const vatA=sP*vat/100,fin=sP+vatA,mrg=sP>0?(sR/sP*100):0,s=sym();
+  document.getElementById('f-tp').textContent=fmt(sP);
+  document.getElementById('f-tc').textContent=fmt(sC);
+  document.getElementById('f-pr').textContent=fmt(sR);
+  document.getElementById('f-pr2').textContent=fmt(sR);
+  document.getElementById('f-mrg').textContent=mrg.toFixed(1)+'%';
+  document.getElementById('f-vat').textContent=fmt(vatA);
+  document.getElementById('f-final').textContent=fmt(fin);
+  document.getElementById('vat-lbl').textContent=vat;
+  document.getElementById('c-total').textContent=s+' '+fmt(sP);
+  document.getElementById('c-cost').textContent=s+' '+fmt(sC);
+  document.getElementById('c-profit').textContent=s+' '+fmt(sR);
+  document.getElementById('c-margin').textContent=mrg.toFixed(1)+'%';
 }
 
-function exportFinalCSV() {
-  const body = document.getElementById('finalBody');
-  if (!body.rows.length) { generateFinalResult(); }
-  let csv = 'Politis,Pelatis,Ergo,Minas,Status,Syn.Kosto,Esoda,Mikto Kerdos,Promithia,MarkUp,Margin,EXOPLISMOS,YPIRESIES,ALLA EXODA,MIKROYLIKA,ACCESSORIES,LOGISMIKO,METAFORIKA,Lead,Enarxi,Kleisimo\n';
-  Array.from(body.rows).forEach(tr => {
-    csv += Array.from(tr.cells).map(c => c.textContent).join(',') + '\n';
-  });
-  downloadCSV(csv, 'final_result.csv');
+document.getElementById('curr').addEventListener('change',recalc);
+document.getElementById('usd-rate').addEventListener('input',recalc);
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#deal-input')&&!e.target.closest('#deal-list'))document.getElementById('deal-list').style.display='none';
+  if(!e.target.closest('#meta-to')&&!e.target.closest('#cac-list'))document.getElementById('cac-list').style.display='none';
+});
+
+async function saveDeal(){
+  const to=document.getElementById('meta-to').value,co=document.getElementById('meta-co').value;
+  const fin=parseFloat(document.getElementById('f-final').textContent?.replace(/\./g,'').replace(',','.'))||0;
+  if(!to&&!co){setStatus('\u03a3\u03c5\u03bc\u03c0\u03bb\u03b7\u03c1\u03ce\u03c3\u03c4\u03b5 \u03b5\u03c0\u03b1\u03c6\u03ae \u03ae \u03b5\u03c4\u03b1\u03b9\u03c1\u03b5\u03af\u03b1.','err');return;}
+  if(fin<=0){setStatus('\u03a4\u03bf \u03c3\u03cd\u03bd\u03bf\u03bb\u03bf \u03b5\u03af\u03bd\u03b1\u03b9 0.','err');return;}
+  const btn=document.getElementById('hs-save-btn');btn.disabled=true;
+  setStatus('\u0391\u03c0\u03bf\u03b8\u03ae\u03ba\u03b5\u03c5\u03c3\u03b7 deal \u03c3\u03c4\u03bf HubSpot...','loading');
+  const lines=rows.filter(n=>!isSection(n)).map(n=>{
+    const desc=document.querySelectorAll('#r'+n+' input[type="text"]')[1]?.value||'Item';
+    return desc+': '+document.getElementById('tp'+n)?.textContent||'0';
+  }).join('\n');
+  const dealName='\u03a0\u03c1\u03bf\u03c3\u03c6\u03bf\u03c1\u03ac \u2013 '+(co||to)+' \u2013 '+new Date().toLocaleDateString('el-GR');
+  try{
+    const text=await callClaude(
+      'You are a HubSpot CRM assistant. Create the deal using MCP. End your response with exactly: DEAL_URL: <url>',
+      'Create HubSpot deal:\n- Name: "'+dealName+'"\n- Amount: '+fin+'\n- Stage: appointmentscheduled\n- Description: "\u0393\u03c1\u03b1\u03bc\u03bc\u03ad\u03c2:\n'+lines+'"\nReturn DEAL_URL: <url>'
+    );
+    const url=(text.match(/DEAL_URL:\s*(https?:\/\/\S+)/)||[])[1];
+    if(url){setStatus('\u2713 Deal \u03b4\u03b7\u03bc\u03b9\u03bf\u03c5\u03c1\u03b3\u03ae\u03b8\u03b7\u03ba\u03b5: "'+dealName+'". \u0386\u03bd\u03bf\u03b9\u03b3\u03bc\u03b1...','ok');setTimeout(()=>window.open(url,'_blank'),1200);}
+    else setStatus('\u2713 Deal "'+dealName+'" \u03b4\u03b7\u03bc\u03b9\u03bf\u03c5\u03c1\u03b3\u03ae\u03b8\u03b7\u03ba\u03b5 \u03c3\u03c4\u03bf HubSpot.','ok');
+  }catch(e){setStatus('\u03a3\u03c6\u03ac\u03bb\u03bc\u03b1 \u03b1\u03c0\u03bf\u03b8\u03ae\u03ba\u03b5\u03c5\u03c3\u03b7\u03c2. \u0395\u03bb\u03ad\u03b3\u03be\u03c4\u03b5 \u03c3\u03cd\u03bd\u03b4\u03b5\u03c3\u03b7.','err');}
+  btn.disabled=false;
 }
 
-function downloadCSV(csv, filename) {
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = filename; a.click();
-  URL.revokeObjectURL(url);
-}
-
-window.addEventListener('load', init);
+for(let i=0;i<3;i++)addRow();
 </script>
 </body>
 </html>
