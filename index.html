@@ -447,7 +447,52 @@ async function saveDeal(){
   btn.disabled=false;
 }
 
-for(let i=0;i<3;i++)addRow();
+for(let i=0;i<3;i++)addRow()
+
+const WORKER='https://throbbing-shape-b183.p-garantziotis.workers.dev';
+
+async function autoLoadFromUrl(){
+  const params=new URLSearchParams(window.location.search);
+  const dealId=params.get('dealId');
+  if(!dealId)return;
+  // Hide default rows and show loading
+  const overlay=document.getElementById('tbl-overlay');
+  overlay.classList.add('show');
+  setStatus('Φόρτωση deal από HubSpot...','loading');
+  try{
+    // Get deal details
+    const dr=await fetch(WORKER+'/deal/'+dealId);
+    const dd=await dr.json();
+    const dealName=dd.properties?.dealname||'Deal '+dealId;
+    const company=dd.properties?.company||'';
+    // Set deal info in UI
+    selDeal={id:dealId,name:dealName,company:company};
+    document.getElementById('deal-input').value=dealName;
+    const box=document.getElementById('deal-info');box.style.display='block';
+    document.getElementById('di-name').textContent=dealName;
+    document.getElementById('di-meta').innerHTML='<span>Deal ID: '+dealId+'</span>';
+    document.getElementById('load-btn').disabled=false;
+    document.getElementById('load-hint').textContent='Deal ID: '+dealId+' · Φόρτωση γραμμών...';
+    // Get line items
+    const lr=await fetch(WORKER+'/lineitems/'+dealId);
+    const items=await lr.json();
+    if(items&&items.length){
+      document.getElementById('tbody').innerHTML='';rows=[];rc=0;
+      items.forEach(it=>addRow({code:it.sku||'',desc:it.name||'',up:+it.price||0,qty:+it.quantity||1,disc:+it.discount||0,fromHs:true}));
+      if(company)document.getElementById('meta-co').value=company;
+      setStatus('✓ Φορτώθηκαν '+items.length+' γραμμές από "'+dealName+'".','ok');
+    }else{
+      setStatus('Δεν βρέθηκαν γραμμές για αυτό το deal.','err');
+    }
+    // Set the kostologio_url property on the deal (async, no await needed)
+    fetch(WORKER+'/seturl/'+dealId).catch(()=>{});
+  }catch(e){
+    setStatus('Σφάλμα φόρτωσης deal. '+e.message,'err');
+  }
+  overlay.classList.remove('show');
+}
+
+autoLoadFromUrl();;
 </script>
 </body>
 </html>
