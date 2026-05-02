@@ -295,7 +295,7 @@ async function loadLineItems(){
   setStatus('\u03a6\u03cc\u03c1\u03c4\u03c9\u03c3\u03b7 \u03b3\u03c1\u03b1\u03bc\u03bc\u03ce\u03bd \u03b1\u03c0\u03cc deal "'+selDeal.name+'"...','loading');
   try{
     const text=await callClaude(
-      'You are a HubSpot assistant. Fetch line items for a deal and return ONLY a JSON array:\n[{"name":"...","sku":"...","price":0,"quantity":1,"discount":0}]\nprice: unit price as number. quantity: number. discount: discount percentage as number (0 if none). sku: product code or "".\nReturn [] if no line items. NO markdown, NO extra text.',
+      'You are a HubSpot assistant. Fetch line items for a deal and return ONLY a JSON array:\n[{"name":"...","sku":"...","price":0,"quantity":1,"discount":0,"cost":0}]\nprice: unit price as number. quantity: number. discount: discount percentage as number (0 if none). sku: product code or "". cost: unit cost (hs_cost_of_goods_sold) as number (0 if not set).\nReturn [] if no line items. NO markdown, NO extra text.',
       'Fetch all line items for HubSpot deal ID '+selDeal.id+'. Return as plain JSON array.'
     );
     const items=parseJSON(text)||[];
@@ -303,7 +303,7 @@ async function loadLineItems(){
       setStatus('\u0394\u03b5\u03bd \u03b2\u03c1\u03ad\u03b8\u03b7\u03ba\u03b1\u03bd \u03b3\u03c1\u03b1\u03bc\u03bc\u03ad\u03c2 \u03b3\u03b9\u03b1 \u03b1\u03c5\u03c4\u03cc \u03c4\u03bf deal. \u039c\u03c0\u03bf\u03c1\u03b5\u03af\u03c4\u03b5 \u03bd\u03b1 \u03c4\u03b9\u03c2 \u03c0\u03c1\u03bf\u03c3\u03b8\u03ad\u03c3\u03b5\u03c4\u03b5 \u03c7\u03b5\u03b9\u03c1\u03bf\u03ba\u03af\u03bd\u03b7\u03c4\u03b1.','err');
     }else{
       document.getElementById('tbody').innerHTML='';rows=[];rc=0;
-      items.forEach(it=>addRow({code:it.sku||'',desc:it.name||'',up:+it.price||0,qty:+it.quantity||1,disc:+it.discount||0}));
+      items.forEach(it=>addRow({code:it.sku||'',desc:it.name||'',up:+it.price||0,qty:+it.quantity||1,disc:+it.discount||0,sp:+it.cost||0}));
       if(selDeal.company&&!document.getElementById('meta-co').value)
         document.getElementById('meta-co').value=selDeal.company;
       setStatus('\u2713 \u03a6\u03bf\u03c1\u03c4\u03ce\u03b8\u03b7\u03ba\u03b1\u03bd '+items.length+' \u03b3\u03c1\u03b1\u03bc\u03bc\u03ad\u03c2 \u03b1\u03c0\u03cc "'+selDeal.name+'".','ok');
@@ -478,7 +478,7 @@ async function autoLoadFromUrl(){
     const items=(await lr.json()).results||[];
     if(items&&items.length){
       document.getElementById('tbody').innerHTML='';rows=[];rc=0;
-      items.forEach(it=>addRow({code:'',desc:it.properties?.name||'',up:+(it.properties?.price)||0,qty:+(it.properties?.quantity)||1,disc:+(it.properties?.discount)||0,fromHs:false}));
+      items.forEach(it=>addRow({code:it.properties?.hs_sku||'',desc:it.properties?.name||'',up:+(it.properties?.price)||0,qty:+(it.properties?.quantity)||1,disc:+(it.properties?.discount)||0,sp:+(it.properties?.hs_cost_of_goods_sold)||0,fromHs:true}));
       if(company)document.getElementById('meta-co').value=company;
       setStatus('✓ Φορτώθηκαν '+items.length+' γραμμές από "'+dealName+'".','ok');
     }else{
