@@ -475,10 +475,10 @@ async function autoLoadFromUrl(){
     document.getElementById('load-hint').textContent='Deal ID: '+dealId+' · Φόρτωση γραμμών...';
     // Get line items
     const lr=await fetch(WORKER+'/lineitems/'+dealId);
-    const items=await lr.json();
+    const items=(await lr.json()).results||[];
     if(items&&items.length){
       document.getElementById('tbody').innerHTML='';rows=[];rc=0;
-      items.forEach(it=>addRow({code:it.sku||'',desc:it.name||'',up:+it.price||0,qty:+it.quantity||1,disc:+it.discount||0,fromHs:false}));
+      items.forEach(it=>addRow({code:'',desc:it.properties?.name||'',up:+(it.properties?.price)||0,qty:+(it.properties?.quantity)||1,disc:+(it.properties?.discount)||0,fromHs:false}));
       if(company)document.getElementById('meta-co').value=company;
       setStatus('✓ Φορτώθηκαν '+items.length+' γραμμές από "'+dealName+'".','ok');
     }else{
