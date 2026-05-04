@@ -357,7 +357,7 @@ function cSearch(q){
         const el=document.createElement('div');el.className='cac-item';
         el.innerHTML='<div>'+(c.name||c.email||'\u2014')+'</div><div class="cac-sub">'+(c.email||'')+' '+(c.company?'\u00b7 '+c.company:'')+'</div>';
         el.onclick=()=>{
-ΒΑΣΙΚΑ ΣΤΟΙΧΕΙΑ          selContact=c;list.style.display='none';
+            selContact=c;list.style.display='none';
         };
         list.appendChild(el);
       });
