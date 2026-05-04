@@ -382,13 +382,13 @@ function getN(row,idx){const ins=document.querySelectorAll('#r'+row+' input[type
 function cr(n){
   if(isSection(n))return;
   const up=getN(n,0),qty=getN(n,1)||1,lp=getN(n,2),disc=getN(n,3),sp=getN(n,4);
-  const tp=up*qty,cb=lp*(1-disc/100),cu=sp>0?sp:cb,tc=cu*qty,pu=up-cu,pr=pu*qty,mrg=up>0?(pu/up*100):0;
+      const tp=up*qty*(1-disc/100),cb=lp*(1-disc/100),cu=sp>0?sp:cb,tc=cu*qty,pu=up*(1-disc/100)-cu,pr=pu*qty,mrg=up>0?(pu/(up*(1-disc/100))*100):0;
   document.getElementById('tp'+n).textContent=fmt(tp);
   document.getElementById('cb'+n).textContent=fmt(cb);
   document.getElementById('cu'+n).textContent=fmt(cu);
   document.getElementById('tc'+n).textContent=fmt(tc);
-  document.getElementById('pu'+n).textContent=fmt(pu);
-  const pel=document.getElementById('pr'+n);pel.textContent=fmt(pr);pel.className='auto profit '+(pr>=0?'pos':'neg');
+      document.getElementById('pu'+n).textContent=sym()+' '+fmt(pu);
+      const pel=document.getElementById('pr'+n);pel.textContent=sym()+' '+fmt(pr);pel.className='auto profit '+(pr>=0?'pos':'neg');
   const mel=document.getElementById('mr'+n);mel.textContent=mrg.toFixed(1)+'%';mel.className='auto profit '+(mrg>=0?'pos':'neg');
   recalc();
 }
