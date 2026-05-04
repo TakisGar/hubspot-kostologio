@@ -18,10 +18,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--gray-50);color:var(--gray
 .hs-pill{font-size:11px;padding:4px 12px;border-radius:20px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.85);display:flex;align-items:center;gap:6px}
 .deal-panel{background:#fff;border:1px solid var(--gray-200);border-top:none;padding:20px 28px 16px;position:relative}
 .deal-panel .panel-label{font-size:9px;font-weight:700;letter-spacing:.8px;color:var(--gray-400);text-transform:uppercase;margin-bottom:12px}
-.deal-row{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap}
-.deal-search-wrap{flex:1;min-width:240px}
-.deal-search-wrap label,.fg label{display:block;font-size:10px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
-.ac-wrap{position:relative}
+    .deal-row{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap}
+    .deal-search-wrap{flex:1;min-width:240px}
+td.select.ms{border:1.5px solid var(--gray-200);border-radius:5px;padding:3px 4px;font-family:inherit;font-size:11px;color:var(--navy);background:#fff;width:100%;outline:none}
+    .ac-wrap{position:relative}
 .ac-wrap input,.fg input,.fg select{width:100%;border:1.5px solid var(--gray-200);border-radius:7px;padding:8px 11px;font-family:inherit;font-size:13px;color:var(--gray-900);background:var(--gray-50);outline:none;transition:border .2s}
 .ac-wrap input:focus,.fg input:focus,.fg select:focus{border-color:var(--blue);background:#fff}
 .ac-list{position:absolute;top:100%;left:0;right:0;background:#fff;border:1.5px solid var(--gray-200);border-radius:8px;z-index:200;margin-top:3px;overflow:hidden;max-height:240px;overflow-y:auto;box-shadow:0 8px 28px rgba(15,31,61,.13)}
@@ -34,7 +34,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--gray-50);color:var(--gray
 .deal-info{flex:1;min-width:200px;background:var(--blue-lt);border-radius:8px;padding:12px 16px;display:none}
 .di-name{font-size:13px;font-weight:700;color:var(--navy)}
 .di-meta{font-size:11px;color:var(--gray-600);margin-top:3px;display:flex;gap:10px;flex-wrap:wrap}
-.btn-load{padding:9px 20px;border-radius:7px;border:none;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;background:var(--hs);color:#fff;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;transition:background .2s}
+.btn-load{padding:9px 20px;border-radius:7px;border:none;font-family:inherit;font-size:13px;font-weight:70h0;cursor:pointer;background:var(--hs);color:#fff;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;transition:background .2s}
 .btn-load:hover{background:#e8603d}
 .btn-load:disabled{background:var(--gray-300);cursor:not-allowed}
 .load-hint{font-size:11px;color:var(--gray-400);margin-top:5px;font-style:italic}
@@ -76,6 +76,15 @@ td.auto.pos{color:var(--green);font-weight:600}td.auto.neg{color:var(--red)}
 td.rn{font-size:11px;color:var(--gray-400);text-align:center;width:28px;font-family:'DM Mono',monospace}
 td select.ms{border:1.5px solid var(--gray-200);border-radius:5px;padding:5px 4px;font-family:inherit;font-size:11px;color:var(--gray-700);background:#fff;width:100%;outline:none}
 td.ac{width:26px;text-align:center}
+        td.cat select{border:1.5px solid var(--gray-200);border-radius:5px;padding:3px 4px;font-family:inherit;font-size:11px;color:var(--navy);background:#fff;width:100%;outline:none;min-width:110px}
+        .cat-summary{background:#fff;border:1px solid var(--gray-200);border-radius:var(--r);padding:20px 28px;margin-top:16px}
+        .cat-summary h3{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gray-400);margin-bottom:12px}
+        .cat-table{width:100%;border-collapse:collapse;font-size:12px}
+        .cat-table th{background:var(--navy);color:#fff;padding:6px 10px;text-align:left;font-weight:600;white-space:nowrap}
+        .cat-table td{padding:6px 10px;border-bottom:1px solid var(--gray-100);white-space:nowrap}
+        .cat-table .pos{color:var(--green);font-weight:600}
+        .cat-table .neg{color:var(--red);font-weight:600}
+        .cat-table tfoot td{font-weight:700;background:var(--gray-50);border-top:2px solid var(--gray-200)}
 td.ac button{background:none;border:none;cursor:pointer;color:var(--gray-400);font-size:16px;line-height:1;padding:2px 4px;border-radius:4px;transition:color .15s,background .15s}
 td.ac button:hover{color:var(--red);background:#fee2e2}
 .hs-chip{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--hs);margin-right:4px;vertical-align:middle}
@@ -142,8 +151,7 @@ tfoot tr.final{background:var(--blue)}tfoot tr.final td{color:#fff;font-size:14p
   <div class="fg" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
     <div><label>&#932;&#951;&#955;&#941;&#966;&#969;&#957;&#959;</label><input type="text" id="meta-tel" placeholder="+30..."></div>
     <div><label>FAX</label><input type="text" id="meta-fax" placeholder="+30..."></div>
-  </div>
-  <div class="rate-box">
+<div class="rate-box">
     <div class="ri"><div class="rl">&#925;&#972;&#956;&#953;&#963;&#956;&#945;</div>
       <select id="curr" onchange="recalc()"><option value="EUR">&#8364; EUR</option><option value="USD">$ USD</option><option value="GBP">&#163; GBP</option></select>
     </div>
@@ -166,7 +174,7 @@ tfoot tr.final{background:var(--blue)}tfoot tr.final td{color:#fff;font-size:14p
     <table>
       <thead>
         <tr>
-          <th colspan="5" class="g-base">&#914;&#945;&#963;&#953;&#954;&#940; &#931;&#964;&#959;&#953;&#967;&#949;&#943;&#945;</th>
+          <th colspan="6" class="g-base">&#914;&#945;&#963;&#953;&#954;&#940; &#931;&#964;&#959;&#953;&#967;&#949;&#943;&#945;</th>
           <th colspan="4" class="g-offer">&#931;&#964;&#959;&#953;&#967;&#949;&#943;&#945; &#928;&#961;&#959;&#963;&#966;&#959;&#961;&#940;&#962;</th>
           <th colspan="3" class="g-cost">&#922;&#972;&#963;&#964;&#959;&#962;</th>
           <th colspan="4" class="g-profit">&#922;&#941;&#961;&#948;&#959;&#962; &amp; Margin</th>
@@ -176,6 +184,7 @@ tfoot tr.final{background:var(--blue)}tfoot tr.final td{color:#fff;font-size:14p
           <th style="width:28px">#</th>
           <th style="min-width:80px">SKU</th>
           <th style="min-width:180px">&#928;&#949;&#961;&#953;&#947;&#961;&#945;&#966;&#942;</th>
+                            <th style="min-width:120px" class="g-base">Category</th>th>
           <th style="min-width:85px" class="offer">&#932;&#953;&#956;&#942; &#924;&#959;&#957;.</th>
           <th style="min-width:55px">&#932;&#949;&#956;.</th>
           <th style="min-width:95px" class="offer">&#932;&#953;&#956;&#942; &#931;&#965;&#957;&#972;&#955;&#959;&#965;</th>
@@ -194,23 +203,39 @@ tfoot tr.final{background:var(--blue)}tfoot tr.final td{color:#fff;font-size:14p
       <tbody id="tbody"></tbody>
       <tfoot>
         <tr class="grand">
-          <td colspan="5" class="lbl">&#915;&#949;&#957;&#953;&#954;&#972; &#931;&#973;&#957;&#959;&#955;&#959;</td>
+          <td colspan="6" class="lbl">&#915;&#949;&#957;&#953;&#954;&#972; &#931;&#973;&#957;&#959;&#955;&#959;</td>
           <td id="f-tp">0.00</td><td></td><td></td><td></td><td></td><td></td>
           <td id="f-tc">0.00</td><td id="f-pr">0.00</td><td id="f-pr2">0.00</td>
           <td id="f-mrg">0.0%</td><td></td><td></td>
         </tr>
         <tr class="vat">
-          <td colspan="5" class="lbl">&#934;&#928;&#913; (<span id="vat-lbl">24</span>%)</td>
+          <td colspan="6" class="lbl">&#934;&#928;&#913; (<span id="vat-lbl">24</span>%)</td>
           <td id="f-vat">0.00</td><td colspan="11"></td>
         </tr>
         <tr class="final">
-          <td colspan="5" class="lbl">&#932;&#949;&#955;&#953;&#954;&#972; &#922;&#972;&#963;&#964;&#959;&#962; (&#956;&#949; &#934;&#928;&#913;)</td>
+          <td colspan="6" class="lbl">&#932;&#949;&#955;&#953;&#954;&#972; &#922;&#972;&#963;&#964;&#959;&#962; (&#956;&#949; &#934;&#928;&#913;)</td>
           <td id="f-final">0.00</td><td colspan="11"></td>
         </tr>
       </tfoot>
     </table>
   </div>
 </div>
+    <div class="cat-summary" id="cat-summary" style="display:none">
+      <h3>Margin by Category</h3>
+      <table class="cat-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th style="text-align:right">Revenue</th>
+            <th style="text-align:right">Cost</th>
+            <th style="text-align:right">Profit</th>
+            <th style="text-align:right">Margin %</th>
+          </tr>
+        </thead>
+        <tbody id="cat-tbody"></tbody>
+        <tfoot id="cat-tfoot"></tfoot>
+      </table>
+    </div>
 
 <!-- CONTROLS -->
 <div class="ctrl">
@@ -307,8 +332,7 @@ async function loadLineItems(){
       if(selDeal.company&&!document.getElementById('meta-co').value)
         document.getElementById('meta-co').value=selDeal.company;
       setStatus('\u2713 \u03a6\u03bf\u03c1\u03c4\u03ce\u03b8\u03b7\u03ba\u03b1\u03bd '+items.length+' \u03b3\u03c1\u03b1\u03bc\u03bc\u03ad\u03c2 \u03b1\u03c0\u03cc "'+selDeal.name+'".','ok');
-    }
-  }catch(e){setStatus('\u03a3\u03c6\u03ac\u03bb\u03bc\u03b1 \u03c6\u03cc\u03c1\u03c4\u03c9\u03c3\u03b7\u03c2. \u0394\u03bf\u03ba\u03b9\u03bc\u03ac\u03c3\u03c4\u03b5 \u03be\u03b1\u03bd\u03ac.','err');}
+    }catch(e){setStatus('\u03a3\u03c6\u03ac\u03bb\u03bc\u03b1 \u03c6\u03cc\u03c1\u03c4\u03c9\u03c3\u03b7\u03c2. \u0394\u03bf\u03ba\u03b9\u03bc\u03ac\u03c3\u03c4\u03b5 \u03be\u03b1\u03bd\u03ac.','err');}
   btn.disabled=false;btn.innerHTML='\u2b07 \u03a6\u03cc\u03c1\u03c4\u03c9\u03c3\u03b7 \u0393\u03c1\u03b1\u03bc\u03bc\u03ce\u03bd';
   overlay.classList.remove('show');
 }
@@ -332,9 +356,7 @@ function cSearch(q){
         const el=document.createElement('div');el.className='cac-item';
         el.innerHTML='<div>'+(c.name||c.email||'\u2014')+'</div><div class="cac-sub">'+(c.email||'')+' '+(c.company?'\u00b7 '+c.company:'')+'</div>';
         el.onclick=()=>{
-          document.getElementById('meta-to').value=c.name||c.email||'';
-          if(c.company)document.getElementById('meta-co').value=c.company;
-          selContact=c;list.style.display='none';
+ΒΑΣΙΚΑ ΣΤΟΙΧΕΙΑ          selContact=c;list.style.display='none';
         };
         list.appendChild(el);
       });
@@ -342,7 +364,7 @@ function cSearch(q){
   },350);
 }
 
-function addRow(d={}){
+thead(d={}){
   rc++;const n=rc;rows.push(n);
   const tr=document.createElement('tr');tr.id='r'+n;
   const chip=d.fromHs?'<span class="hs-chip" title="\u0391\u03c0\u03cc HubSpot"></span>':'';
@@ -350,6 +372,15 @@ function addRow(d={}){
   '<td class="rn">'+n+'</td>'+
   '<td><input type="text" placeholder="SKU" value="'+(d.code||'')+'"></td>'+
   '<td><input type="text" placeholder="\u03a0\u03b5\u03c1\u03b9\u03b3\u03c1\u03b1\u03c6\u03ae..." value="'+chip+(d.desc||'')+'" style="min-width:160px"></td>'+
+              '<td class="cat"><select onchange="recalc()">'+
+              '<option value="">— Category —</option>'+
+              '<option value="Equipment"'+(d.cat==='Equipment'?' selected':'')+'>Equipment</option>'+
+              '<option value="Services"'+(d.cat==='Services'?' selected':'')+'>Services</option>'+
+            '<option value="Other Expenses"'+(d.cat==='Other Expenses'?' selected':'')+'>Other Expenses</option>'+
+              '<option value="Small Parts"'+(d.cat==='Small Parts'?' selected':'')+'>Small Parts</option>'+
+              '<option value="Accessories"'+(d.cat==='Accessories'?' selected':'')+'>Accessories</option>'+
+              '<option value="Shipping"'+(d.cat==='Shipping'?' selected':'')+'>Shipping</option>'+
+              '<option value="Software"'+(d.cat==='Software'?' selected':'')+'>Software</option>'+
   '<td class="offer"><input type="number" placeholder="0.00" value="'+(d.up||'')+'" step="0.01" min="0" oninput="cr('+n+')"></td>'+
   '<td><input type="number" placeholder="1" value="'+(d.qty||1)+'" step="1" min="0" oninput="cr('+n+')"></td>'+
   '<td class="auto offer" id="tp'+n+'">0.00</td>'+
@@ -393,12 +424,35 @@ function cr(n){
   recalc();
 }
 
+function updateCatSummary(catData,totalP){
+  const tbody=document.getElementById('cat-tbody');
+  const tfoot=document.getElementById('cat-tfoot');
+  const el=document.getElementById('cat-summary');
+  if(!tbody||!tfoot||!el)return;
+  const keys=Object.keys(catData);
+  if(!keys.length){el.style.display='none';return;}
+  el.style.display='block';
+  const s=sym();
+  tbody.innerHTML=keys.map(cat=>{
+    const d=catData[cat];
+    const m=d.p>0?((d.r/d.p)*100):0;
+    const mc=m>=30?'pos':m<0?'neg':'';
+    return '<tr><td>'+cat+'</td><td style="text-align:right">'+s+' '+fmt(d.p)+'</td><td style="text-align:right">'+s+' '+fmt(d.c)+'</td><td style="text-align:right" class="'+mc+'">'+s+' '+fmt(d.r)+'</td><td style="text-align:right" class="'+mc+'">'+m.toFixed(1)+'%</td></tr>';
+  }).join('');
+  const totP=keys.reduce((a,k)=>a+catData[k].p,0);
+  const totC=keys.reduce((a,k)=>a+catData[k].c,0);
+  const totR=keys.reduce((a,k)=>a+catData[k].r,0);
+  const totM=totP>0?((totR/totP)*100):0;
+  tfoot.innerHTML='<tr><td><strong>Total</strong></td><td style="text-align:right"><strong>'+s+' '+fmt(totP)+'</strong></td><td style="text-align:right"><strong>'+s+' '+fmt(totC)+'</strong></td><td style="text-align:right"><strong>'+s+' '+fmt(totR)+'</strong></td><td style="text-align:right"><strong>'+totM.toFixed(1)+'%</strong></td></tr>';
+}
 function recalc(){
   let sP=0,sC=0,sR=0;
+  const catData={};
   rows.forEach(n=>{
     if(isSection(n))return;
           const p=id=>{const el=document.getElementById(id);if(!el)return 0;return parseFloat((el.textContent||'').replace(/[^\d,.-]/g,'').replace(/\./g,'').replace(',','.'))||0;};
     sP+=p('tp'+n);sC+=p('tc'+n);sR+=p('pr'+n);
+        const catSel=document.querySelector('#r'+n+' .cat select');const cat=catSel?catSel.value:'';if(cat){if(!catData[cat])catData[cat]={p:0,c:0,r:0};catData[cat].p+=p('tp'+n);catData[cat].c+=p('tc'+n);catData[cat].r+=p('pr'+n);}
   });
   const vat=parseFloat(document.getElementById('vat').value)||0;
   const vatA=sP*vat/100,fin=sP+vatA,mrg=sP>0?(sR/sP*100):0,s=sym();
@@ -414,6 +468,7 @@ function recalc(){
   document.getElementById('c-cost').textContent=s+' '+fmt(sC);
   document.getElementById('c-profit').textContent=s+' '+fmt(sR);
   document.getElementById('c-margin').textContent=mrg.toFixed(1)+'%';
+  updateCatSummary(catData,sP);
 }
 
 document.getElementById('curr').addEventListener('change',recalc);
