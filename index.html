@@ -397,7 +397,7 @@ function recalc(){
   let sP=0,sC=0,sR=0;
   rows.forEach(n=>{
     if(isSection(n))return;
-    const p=id=>{const el=document.getElementById(id);if(!el)return 0;return parseFloat(el.textContent?.replace(/\./g,'').replace(',','.'))||0;};
+          const p=id=>{const el=document.getElementById(id);if(!el)return 0;return parseFloat((el.textContent||'').replace(/[^\d,.-]/g,'').replace(/\./g,'').replace(',','.'))||0;};
     sP+=p('tp'+n);sC+=p('tc'+n);sR+=p('pr'+n);
   });
   const vat=parseFloat(document.getElementById('vat').value)||0;
