@@ -82,6 +82,8 @@ td.cat select{width:100%;min-width:110px;font-size:12px;padding:2px 4px;border:1
 td.ac button{background:none;border:none;cursor:pointer;color:var(--gray-400);font-size:16px;line-height:1;padding:2px 4px;border-radius:4px;transition:color .15s,background .15s}
 td.ac button:hover{color:var(--red);background:#fee2e2}
 .hs-chip{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--hs);margin-right:4px;vertical-align:middle}
+tr.from-hs td:nth-child(3){position:relative}
+tr.from-hs td:nth-child(3)::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--hs);margin-right:6px;vertical-align:middle}
 .sec-row td{background:var(--gray-100);font-weight:600;font-size:10px;color:var(--gray-600);text-transform:uppercase;letter-spacing:.7px;padding:5px 10px;border-top:2px solid var(--gray-200)}
 tfoot tr{border-top:2px solid var(--gray-200)}
 tfoot td{padding:8px 8px;font-family:'DM Mono',monospace;font-size:12px;font-weight:600;text-align:right;color:var(--gray-900)}
@@ -331,12 +333,12 @@ function addRow(d){
   d=d||{};
   rc++; const n=rc; rows.push(n);
   const tr=document.createElement('tr'); tr.id='r'+n;
-  const chip=d.fromHs?'<span class="hs-chip" title="Από HubSpot"></span>':'';
+  if(d.fromHs) tr.classList.add('from-hs');
   const opts=VALID_CATS.map(c=>'<option value="'+c+'"'+(d.cat===c?' selected':'')+'>'+c+'</option>').join('');
   tr.innerHTML=
     '<td class="rn">'+n+'</td>'+
     '<td><input type="text" placeholder="SKU" value="'+(d.code||'').replace(/"/g,'&quot;')+'"></td>'+
-    '<td><input type="text" placeholder="Περιγραφή..." value="'+(chip+(d.desc||'').replace(/"/g,'&quot;'))+'" style="min-width:160px"></td>'+
+    '<td><input type="text" placeholder="Περιγραφή..." value="'+(d.desc||'').replace(/"/g,'&quot;')+'" style="min-width:160px"></td>'+
     '<td class="cat"><select onchange="recalc()"><option value="">— Category —</option>'+opts+'</select></td>'+
     '<td class="offer"><input type="number" placeholder="0.00" value="'+(d.up||'')+'" step="0.01" min="0" oninput="cr('+n+')"></td>'+
     '<td><input type="number" placeholder="1" value="'+(d.qty||1)+'" step="1" min="0" oninput="cr('+n+')"></td>'+
