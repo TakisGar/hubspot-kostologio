@@ -315,7 +315,7 @@ async function loadDealById(dealId, opts){
       items.forEach(it=>{
         let cat=(it.product_category_ai||'').trim();
         if(!cat || VALID_CATS.indexOf(cat)===-1) cat=classifyByName(it.name);
-        addRow({code:it.product_id||'', desc:it.name||'', up:+it.price||0, qty:+it.quantity||1, disc:0, sp:0, cat:cat, fromHs:true});
+        addRow({code:it.sku||it.product_id||'', desc:it.name||'', up:+it.price||0, qty:+it.quantity||1, disc:+it.discount||0, sp:+it.unit_cost||0, cat:cat, fromHs:true});
       });
       setStatus('✓ Φορτώθηκαν '+items.length+' γραμμές από "'+(dd.name||dealId)+'".','ok');
     }else{
