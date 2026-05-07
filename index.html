@@ -267,16 +267,7 @@ function contactSearch(q){
       const contacts=data.results||[];
       list.innerHTML='';
       if(!contacts.length){list.innerHTML='<div class="ac-item"><div class="ac-name" style="color:#94a3b8">Δεν βρέθηκαν επαφές</div></div>';return;}
-      contacts.forEach(c=>{
-        const el=document.createElement('div');el.className='ac-item';
-        const sub=[c.email,c.company,c.phone].filter(Boolean).join(' · ');
-        el.innerHTML='<div class="ac-name">'+(c.name||c.email||'—')+'</div>'+(sub?'<div class="ac-sub">'+sub+'</div>':'');
-        el.onclick=()=>{
-          document.getElementById('meta-to').value=c.name||c.email||'';
-          if(c.company && !document.getElementById('meta-co').value) document.getElementById('meta-co').value=c.company;
-          if(c.phone && !document.getElementById('meta-tel').value) document.getElementById('meta-tel').value=c.phone;
-          list.style.display='none';
-        };
+ contacts.forEach(c=>{ const el=document.createElement('div');el.className='ac-item'; const fullName=((c.firstname||'')+' '+(c.lastname||'')).trim()||c.name||c.email||'—'; const phone=c.phone||c.mobilephone||''; const sub=[c.email,c.company,phone].filter(Boolean).join(' · '); el.innerHTML='<div class="ac-name">'+fullName+'</div>'+(sub?'<div class="ac-sub">'+sub+'</div>':''); el.onclick=()=>{ document.getElementById('meta-to').value=fullName; if(c.company && !document.getElementById('meta-co').value) document.getElementById('meta-co').value=c.company; if(phone && !document.getElementById('meta-tel').value) document.getElementById('meta-tel').value=phone; list.style.display='none'; };
         list.appendChild(el);
       });
     }catch(e){
@@ -335,14 +326,7 @@ async function loadDealById(dealId, opts){
     if(!r.ok) throw new Error('HTTP '+r.status);
     const dd=await r.json();
     if(dd.error) throw new Error(dd.error);
-    selDeal={id:dd.id, name:dd.name, amount:dd.amount, stage:dd.stage};
-    document.getElementById('deal-input').value=dd.name||'';
-    const box=document.getElementById('deal-info'); box.style.display='block';
-    document.getElementById('di-name').textContent=dd.name||'—';
-    const stage=STAGES[dd.stage]||dd.stage||'';
-    document.getElementById('di-meta').innerHTML='<span>💰 '+(dd.amount?'€ '+fmt(dd.amount):'—')+'</span>'+(stage?'<span>📍 '+stage+'</span>':'')+'<span>🆔 '+dd.id+'</span>';
-    document.getElementById('load-hint').textContent='Deal ID: '+dd.id;
-    const items=dd.line_items||[];
+    const dProps=dd.properties||{}; const dName=dProps.dealname||dd.name||''; const dAmount=dProps.amount||dd.amount||''; const dStage=dProps.dealstage||dd.stage||''; selDeal={id:dd.id, name:dName, amount:dAmount, stage:dStage}; document.getElementById('deal-input').value=dName; const box=document.getElementById('deal-info'); box.style.display='block'; document.getElementById('di-name').textContent=dName||'—'; const stage=STAGES[dStage]||dStage||''; document.getElementById('di-meta').innerHTML='<span>💰 '+(dAmount?'€ '+fmt(dAmount):'—')+'</span>'+(stage?'<span>📍 '+stage+'</span>':'')+'<span>🆔 '+dd.id+'</span>'; document.getElementById('load-hint').textContent='Deal ID: '+dd.id; const items=dd.lineItems||dd.line_items||[];
     document.getElementById('tbody').innerHTML=''; rows=[]; rc=0;
     if(items.length){
       items.forEach(it=>{
