@@ -134,7 +134,10 @@ tfoot tr.final{background:var(--blue)}tfoot tr.final td{color:#fff;font-size:14p
 <div class="meta">
   <div class="fg">
     <label>Προς (To)</label>
-    <input type="text" id="meta-to" placeholder="Όνομα επαφής...">
+    <div class="ac-wrap">
+      <input type="text" id="meta-to" placeholder="Αναζήτηση επαφής HubSpot..." oninput="contactSearch(this.value)" autocomplete="off">
+      <div class="ac-list" id="contact-list" style="display:none"></div>
+    </div>
   </div>
   <div class="fg"><label>Εταιρεία</label><input type="text" id="meta-co" placeholder="Εταιρεία"></div>
   <div class="fg" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
@@ -227,7 +230,7 @@ tfoot tr.final{background:var(--blue)}tfoot tr.final td{color:#fff;font-size:14p
 </div>
 <script>
 const WORKER_BASE_URL = "https://hubspot-kostologio.p-garantziotis.workers.dev";
-let rows=[], rc=0, selDeal=null, dealTimer=null;
+let rows=[], rc=0, selDeal=null, dealTimer=null, contactTimer=null;
 const fmt = v => (+v||0).toLocaleString('el-GR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const sym = () => {const c=document.getElementById('curr').value; return c==='USD'?'$':c==='GBP'?'£':'€'};
 const STAGES = {
@@ -251,7 +254,37 @@ function classifyByName(name){
 }
 function setStatus(msg,type){const el=document.getElementById('status');el.textContent=msg;el.className='status '+type;el.style.display=msg?'block':'none';}
 function isSection(n){const r=document.getElementById('r'+n);return r && r.classList.contains('sec-row');}
-function dealSearch(q){
+function contactSearch(q){
+  clearTimeout(contactTimer);
+  const list=document.getElementById('contact-list');
+  if(!q||q.length<2){list.style.display='none';return;}
+  contactTimer=setTimeout(async()=>{
+    list.innerHTML='<div class="ac-item"><div class="ac-name" style="color:#94a3b8">Αναζήτηση...</div></div>';
+    list.style.display='block';
+    try{
+      const r=await fetch(WORKER_BASE_URL+'/contacts/search?q='+encodeURIComponent(q));
+      const data=await r.json();
+      const contacts=data.results||[];
+      list.innerHTML='';
+      if(!contacts.length){list.innerHTML='<div class="ac-item"><div class="ac-name" style="color:#94a3b8">Δεν βρέθηκαν επαφές</div></div>';return;}
+      contacts.forEach(c=>{
+        const el=document.createElement('div');el.className='ac-item';
+        const sub=[c.email,c.company,c.phone].filter(Boolean).join(' · ');
+        el.innerHTML='<div class="ac-name">'+(c.name||c.email||'—')+'</div>'+(sub?'<div class="ac-sub">'+sub+'</div>':'');
+        el.onclick=()=>{
+          document.getElementById('meta-to').value=c.name||c.email||'';
+          if(c.company && !document.getElementById('meta-co').value) document.getElementById('meta-co').value=c.company;
+          if(c.phone && !document.getElementById('meta-tel').value) document.getElementById('meta-tel').value=c.phone;
+          list.style.display='none';
+        };
+        list.appendChild(el);
+      });
+    }catch(e){
+      list.innerHTML='<div class="ac-item"><div class="ac-name" style="color:#dc2626;font-size:12px">Σφάλμα σύνδεσης</div></div>';
+    }
+  },350);
+}
+  function dealSearch(q){
   clearTimeout(dealTimer);
   const list=document.getElementById('deal-list');
   if(!q||q.length<2){list.style.display='none';return;}
@@ -431,6 +464,7 @@ document.getElementById('curr').addEventListener('change',recalc);
 document.getElementById('usd-rate').addEventListener('input',recalc);
 document.addEventListener('click',e=>{
   if(!e.target.closest('#deal-input')&&!e.target.closest('#deal-list')) document.getElementById('deal-list').style.display='none';
+  if(!e.target.closest('#meta-to')&&!e.target.closest('#contact-list')) document.getElementById('contact-list').style.display='none';
 });
 async function autoLoadFromUrl(){
   const params=new URLSearchParams(window.location.search);
