@@ -61,7 +61,7 @@ export default{
     // /seturl/:dealId -> set kostologio_url on deal
     const mSet=p.match(/^\/seturl\/([^/]+)$/);
     if(mSet){
-      const calcUrl='https://throbbing-shape-b183.p-garantziotis.workers.dev/open/'+mSet[1];
+      const calcUrl='https://takisgar.github.io/hubspot-kostologio/?dealId='+mSet[1];
       await hub('/crm/v3/objects/deals/'+mSet[1],{method:'PATCH',body:JSON.stringify({properties:{kostologio_url:calcUrl}})},TOKEN);
       return new Response(JSON.stringify({ok:true,url:calcUrl}),{headers:corsH});
     }
@@ -71,7 +71,7 @@ export default{
       const list=await hub('/crm/v3/objects/deals?properties=kostologio_url&limit=100',{},TOKEN);
       const deals=list.results||[];
       const results=await Promise.allSettled(deals.map(async d=>{
-        const calcUrl='https://throbbing-shape-b183.p-garantziotis.workers.dev/open/'+d.id;
+        const calcUrl='https://takisgar.github.io/hubspot-kostologio/?dealId='+d.id;
         await hub('/crm/v3/objects/deals/'+d.id,{method:'PATCH',body:JSON.stringify({properties:{kostologio_url:calcUrl}})},TOKEN);
         return d.id;
       }));
