@@ -18,6 +18,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: 5f4c5486d76c700349b7584b056a6c06
-          command: deploy --name throbbing-shape-b183 worker.js --compatibility-date 2024-01-01
+          command: deploy --name hubspot-kostologio worker.js --compatibility-date 2024-01-01
         env:
           HUBSPOT_TOKEN: ${{ secrets.HUBSPOT_TOKEN }}
