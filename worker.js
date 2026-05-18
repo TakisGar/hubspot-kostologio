@@ -1,4 +1,4 @@
-h// Kostologio Worker v6.0
+// Kostologio Worker v6.0
 // Cloudflare Worker - Proxy for HubSpot API
 // Set HUBSPOT_TOKEN as Cloudflare Worker environment variable/secret
 
