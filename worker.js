@@ -47,7 +47,7 @@ export default{
 
     // /deals/:id -> get deal + line items combined (used by calculator)
     const mDeal=p.match(/^\/deals\/([^/]+)$/);
-    if(mDeal){
+    if(mDeal&&req.method!=='PATCH'){
       const id=mDeal[1];
       const [dealData,assocData]=await Promise.all([
         hub('/crm/v3/objects/deals/'+id+'?properties=dealname,amount,dealstage,closedate,hubspot_owner_id',{},TOKEN),
