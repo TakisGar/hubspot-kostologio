@@ -112,7 +112,9 @@ export default{
       return new Response(JSON.stringify(d),{headers:corsH});
     }
 
-    // /seturl/:dealId -> set kostologio_url on deal
+    // /deals/:id PATCH -> update deal properties
+            const mDealPatch=p.match(/^\/deals\/([^/]+)$/);
+            if(mDealPatch&&req.method==='PATCH'){const body=await req.json();const d=await hub('/crm/v3/objects/deals/'+mDealPatch[1],{method:'PATCH',body:JSON.stringify({properties:body})},TOKEN);return new Response(JSON.stringify(d),{headers:corsH});}
     const mSet=p.match(/^\/seturl\/([^/]+)$/);
     if(mSet){
       const calcUrl='https://takisgar.github.io/hubspot-kostologio/?dealId='+mSet[1];
