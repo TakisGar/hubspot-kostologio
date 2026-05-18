@@ -1,4 +1,4 @@
-// Kostologio Worker v6.0
+h// Kostologio Worker v6.0
 // Cloudflare Worker - Proxy for HubSpot API
 // Set HUBSPOT_TOKEN as Cloudflare Worker environment variable/secret
 
@@ -7,7 +7,7 @@ const CALC='https://takisgar.github.io/hubspot-kostologio/';
 
 const corsH={
   'Access-Control-Allow-Origin':'*',
-  'Access-Control-Allow-Methods':'GET,POST,OPTIONS',
+    'Access-Control-Allow-Methods':'GET,POST,PATCH,OPTIONS',
   'Access-Control-Allow-Headers':'Content-Type,Authorization',
   'Content-Type':'application/json'
 };
