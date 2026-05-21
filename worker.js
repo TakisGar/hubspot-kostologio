@@ -58,7 +58,7 @@ export default{
       if(ids.length){
         const batch=await hub('/crm/v3/objects/line_items/batch/read',{
           method:'POST',
-          body:JSON.stringify({inputs:ids.map(id=>({id})),properties:['name','price','quantity','discount','hs_discount_percentage','hs_cost_of_goods_sold','hs_sku','hs_product_id','hs_line_item_currency_code']})
+          body:JSON.stringify({inputs:ids.map(id=>({id})),properties:['name','price','quantity','discount','hs_discount_percentage','hs_cost_of_goods_sold','hs_sku','hs_product_id','hs_line_item_currency_code','product_category_ai']})
         },TOKEN);
         lineItems=(batch.results||[]).map(li=>({
           id:li.id,
@@ -69,7 +69,8 @@ export default{
           quantity:parseFloat(li.properties?.quantity)||1,
           discount:parseFloat(li.properties?.hs_discount_percentage||li.properties?.discount)||0,
           unit_cost:parseFloat(li.properties?.hs_cost_of_goods_sold)||0,
-          currency:li.properties?.hs_line_item_currency_code||'EUR'
+          currency:li.properties?.hs_line_item_currency_code||'EUR',
+        product_category_ai:li.properties?.product_category_ai||''
         }));
       }
       const props=dealData.properties||{};
