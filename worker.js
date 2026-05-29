@@ -190,6 +190,6 @@ const errors=results.filter(r=>r.status==='rejected').length;
 return new Response(JSON.stringify({updated,errors,total:deals.length}),{headers:corsH});
 }
 
-return new Response(JSON.stringify({ok:true,version:'6.2,endpoints:['/open/:id','/deal/:id','/deals/:id','/deals/search','/contacts/search','/lineitems/:id','/products/:id','/seturl/:id','/updateall']}),{headers:corsH});
+return new Response(JSON.stringify({ok:true,version:'6.2',endpoints:['/open/:id','/deal/:id','/deals/:id','/deals/search','/contacts/search','/lineitems/:id','/products/:id','/seturl/:id','/updateall']}),{headers:corsH});
 }
 };
