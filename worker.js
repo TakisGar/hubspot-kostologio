@@ -1,4 +1,4 @@
-// Kostologio Worker v6.1
+// Kostologio Worker v6.2
 // Cloudflare Worker - Proxy for HubSpot API
 // Set HUBSPOT_TOKEN as Cloudflare Worker environment variable/secret
 
@@ -25,10 +25,7 @@ async function normalizeMargins(body, dealId, token){
 const out={...body};
 const r2=n=>Math.round(n*100)/100;
 
-// Bug 1: scale a fractional margin up to a percentage.
-if(typeof out.margin==='number'){
-out.margin = out.margin<=1 ? r2(out.margin*100) : r2(out.margin);
-}
+// Main margin% is forwarded verbatim: the calculator sends it as a fraction (e.g. 0.201) and the HubSpot 'margin' property is percentage-formatted, so no scaling here.
 
 // Bug 2: recompute per-category margin% from line items (self-contained).
 const TARGET={
@@ -193,6 +190,6 @@ const errors=results.filter(r=>r.status==='rejected').length;
 return new Response(JSON.stringify({updated,errors,total:deals.length}),{headers:corsH});
 }
 
-return new Response(JSON.stringify({ok:true,version:'6.1',endpoints:['/open/:id','/deal/:id','/deals/:id','/deals/search','/contacts/search','/lineitems/:id','/products/:id','/seturl/:id','/updateall']}),{headers:corsH});
+return new Response(JSON.stringify({ok:true,version:'6.2,endpoints:['/open/:id','/deal/:id','/deals/:id','/deals/search','/contacts/search','/lineitems/:id','/products/:id','/seturl/:id','/updateall']}),{headers:corsH});
 }
 };
