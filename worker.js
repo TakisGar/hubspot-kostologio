@@ -1,4 +1,4 @@
-// Kostologio Worker v6.2
+// Kostologio Worker v6.3
 // Cloudflare Worker - Proxy for HubSpot API
 // Set HUBSPOT_TOKEN as Cloudflare Worker environment variable/secret
 
@@ -16,6 +16,70 @@ async function hub(path,init={},token){
 const r=await fetch(HUB+path,{...init,headers:{...init.headers,'Authorization':'Bearer '+token,'Content-Type':'application/json'}});
 return r.json();
 }
+
+// --- Scheduled recompute (cron) helpers ---------------------------------
+// computeMarginsForDeal: fetch a deal's line items and return a HubSpot
+// properties object with main margin + per-category margins (% and EUR).
+// Mirrors the calculator logic so dashboards stay correct even when a rep
+// edits a deal directly in HubSpot and never presses Save in the calculator.
+async function computeMarginsForDeal(dealId, token){
+  const r2=n=>Math.round(n*100)/100;
+  const PCT={'Equipment':'margin___equipment','Services':'margin_percent_services','Shipping':'margin___shipping'};
+  const EUR={'Equipment':'margin_currency_equipment','Services':'margin_currency_services','Shipping':'margin_currency_shipping'};
+  const assoc=await hub('/crm/v3/objects/deals/'+dealId+'/associations/line_items',{},token);
+  const ids=(assoc.results||[]).map(x=>x.id||x.toObjectId);
+  if(!ids.length) return null;
+  const batch=await hub('/crm/v3/objects/line_items/batch/read',{
+    method:'POST',
+    body:JSON.stringify({inputs:ids.map(id=>({id})),properties:['price','quantity','discount','hs_discount_percentage','hs_cost_of_goods_sold','product_category_ai']})
+  },token);
+  const acc={};
+  let totRev=0, totCost=0;
+  for(const li of (batch.results||[])){
+    const pr=li.properties||{};
+    const price=parseFloat(pr.price)||0;
+    const qty=parseFloat(pr.quantity)||1;
+    const disc=parseFloat(pr.hs_discount_percentage||pr.discount)||0;
+    const unitCost=parseFloat(pr.hs_cost_of_goods_sold)||0;
+    const rev=price*qty*(1-disc/100);
+    const cost=unitCost*qty;
+    totRev+=rev; totCost+=cost;
+    const cat=pr.product_category_ai||'';
+    if(!PCT[cat]) continue;
+    if(!acc[cat]) acc[cat]={rev:0,cost:0};
+    acc[cat].rev+=rev; acc[cat].cost+=cost;
+  }
+  const props={};
+  // Main margin: 'margin' is percentage-formatted -> store as fraction; 'margin_currency' is absolute profit.
+  if(totRev>0){ props.margin=r2((totRev-totCost)/totRev); }
+  props.margin_currency=r2(totRev-totCost);
+  for(const cat in PCT){
+    const a=acc[cat];
+    if(a && a.rev>0){
+      props[PCT[cat]]=r2(((a.rev-a.cost)/a.rev)*100);
+      props[EUR[cat]]=r2(a.rev-a.cost);
+    }
+  }
+  return props;
+}
+
+// recomputeAllOpenDeals: search OPEN deals and write fresh margins to each.
+async function recomputeAllOpenDeals(token){
+  const body={filterGroups:[{filters:[{propertyName:'hs_is_closed',operator:'EQ',value:'false'}]}],properties:['dealname'],limit:100};
+  const data=await hub('/crm/v3/objects/deals/search',{method:'POST',body:JSON.stringify(body)},token);
+  const deals=(data.results||[]);
+  let updated=0, skipped=0, failed=0;
+  for(const d of deals){
+    try{
+      const props=await computeMarginsForDeal(d.id, token);
+      if(!props){ skipped++; continue; }
+      await hub('/crm/v3/objects/deals/'+d.id,{method:'PATCH',body:JSON.stringify({properties:props})},token);
+      updated++;
+    }catch(e){ failed++; }
+  }
+  return {total:deals.length, updated, skipped, failed};
+}
+
 
 // Normalize margins written by the Kostologio calculator.
 // Bug 1: main margin% arrives as a fraction (0.449) -> store as percent (44.9).
@@ -190,6 +254,11 @@ const errors=results.filter(r=>r.status==='rejected').length;
 return new Response(JSON.stringify({updated,errors,total:deals.length}),{headers:corsH});
 }
 
-return new Response(JSON.stringify({ok:true,version:'6.2',endpoints:['/open/:id','/deal/:id','/deals/:id','/deals/search','/contacts/search','/lineitems/:id','/products/:id','/seturl/:id','/updateall']}),{headers:corsH});
-}
+return new Response(JSON.stringify({ok:true,version:'6.3',endpoints:['/open/:id','/deal/:id','/deals/:id','/deals/search','/contacts/search','/lineitems/:id','/products/:id','/seturl/:id','/updateall']}),{headers:corsH});
+},
+  // Cron entrypoint: runs on the schedule configured in Cloudflare (every 15 min).
+  async scheduled(event, env, ctx){
+    const TOKEN=env?.HUBSPOT_TOKEN||'';
+    ctx.waitUntil(recomputeAllOpenDeals(TOKEN));
+  }
 };
