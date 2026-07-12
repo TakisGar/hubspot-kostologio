@@ -24,7 +24,7 @@ return r.json();
 // edits a deal directly in HubSpot and never presses Save in the calculator.
 async function computeMarginsForDeal(dealId, token){
   const r2=n=>Math.round(n*100)/100;
-  const PCT={'Equipment':'margin___equipment','Services':'margin_percent_services','Shipping':'margin___shipping'};
+  const PCT={'Equipment':'margin___equipment','Services':'margin__services','Shipping':'margin___shipping'};
   const EUR={'Equipment':'margin_currency_equipment','Services':'margin_currency_services','Shipping':'margin_currency_shipping'};
   const assoc=await hub('/crm/v3/objects/deals/'+dealId+'/associations/line_items',{},token);
   const ids=(assoc.results||[]).map(x=>x.id||x.toObjectId);
@@ -94,7 +94,7 @@ const r2=n=>Math.round(n*100)/100;
 // Bug 2: recompute per-category margin% from line items (self-contained).
 const TARGET={
 'Equipment':'margin___equipment',
-'Services':'margin_percent_services',
+'Services':'margin__services',
 'Shipping':'margin___shipping'
 };
 try{
